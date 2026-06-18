@@ -1,0 +1,1954 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e31837">
+  <link rel="icon" href="data:,">
+  <title>IELTS Rating Scales</title>
+  <style>
+    :root {
+      --red: #e31837;
+      --red-dark: #b90f2b;
+      --red-soft: #fff1f3;
+      --ink: #17191f;
+      --muted: #667085;
+      --subtle: #8a93a3;
+      --line: #d9dee7;
+      --line-strong: #bcc5d2;
+      --surface: #ffffff;
+      --surface-alt: #f7f8fa;
+      --surface-cool: #f2f5f8;
+      --positive: #2ca33a;
+      --positive-soft: #eaf8ec;
+      --limit: #f26a21;
+      --limit-soft: #fff0e7;
+      --control: #7a3fe0;
+      --control-soft: #f2ebff;
+      --organize: #3377e8;
+      --organize-soft: #eaf2ff;
+      --annotation: #ffe887;
+      --band-axis-width: 58px;
+      --criterion-min-width: 265px;
+      --visible-criteria: 4;
+      --descriptor-size: 13px;
+      --matrix-width: calc(var(--band-axis-width) + var(--criterion-min-width) + var(--criterion-min-width) + var(--criterion-min-width) + var(--criterion-min-width));
+      --radius: 10px;
+      --header-height: 58px;
+      --toolbar-height: 86px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--surface);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    body { overflow: hidden; }
+    button, input, select { font: inherit; }
+    button, select { color: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    .hidden { display: none !important; }
+
+    .app {
+      height: 100dvh;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      background: var(--surface);
+    }
+
+    .topbar {
+      min-height: var(--header-height);
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      z-index: 20;
+    }
+
+    .brand-block {
+      width: 88px;
+      flex: 0 0 88px;
+      display: grid;
+      place-items: center;
+      background: var(--red);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -1.2px;
+    }
+
+    .product-name {
+      display: flex;
+      align-items: center;
+      min-width: 230px;
+      padding: 0 20px;
+      font-size: 18px;
+      font-weight: 780;
+      letter-spacing: -.25px;
+      white-space: nowrap;
+    }
+
+    .primary-tabs {
+      display: flex;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .primary-tab {
+      position: relative;
+      border: 0;
+      padding: 0 12px;
+      background: transparent;
+      color: #353944;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .primary-tab::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 0;
+      height: 3px;
+      background: transparent;
+    }
+
+    .primary-tab.active {
+      color: var(--ink);
+      font-weight: 780;
+    }
+
+    .primary-tab.active::after { background: var(--red); }
+
+    .top-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 8px;
+    }
+
+    .icon-button {
+      min-width: 38px;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      color: #394150;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .icon-button:hover,
+    .icon-button:focus-visible {
+      background: var(--surface-alt);
+      border-color: var(--line);
+      outline: 0;
+    }
+
+    .icon-button svg,
+    .control-icon svg,
+    .info-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(350px, auto) minmax(520px, 1fr) minmax(280px, 390px);
+      align-items: center;
+      gap: 18px;
+      min-height: var(--toolbar-height);
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      z-index: 18;
+    }
+
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .toolbar-group.center { justify-content: center; }
+    .toolbar-group.end { justify-content: flex-end; }
+    .toolbar-group.center,
+    .band-navigator,
+    .legend {
+      scrollbar-width: none;
+    }
+    .toolbar-group.center::-webkit-scrollbar,
+    .band-navigator::-webkit-scrollbar,
+    .legend::-webkit-scrollbar {
+      display: none;
+    }
+
+    .select-control,
+    .tool-button,
+    .search-control {
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+
+    .select-control {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-width: 188px;
+    }
+
+    .select-control.wide { min-width: 220px; }
+
+    .control-icon {
+      width: 44px;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      color: #303744;
+      pointer-events: none;
+    }
+
+    .select-control select {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      appearance: none;
+      padding: 0 40px 0 0;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 620;
+    }
+
+    .select-control::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      width: 8px;
+      height: 8px;
+      border-right: 1.8px solid #2f3744;
+      border-bottom: 1.8px solid #2f3744;
+      transform: rotate(45deg) translateY(-3px);
+      pointer-events: none;
+    }
+
+    .select-control:focus-within,
+    .search-control:focus-within {
+      border-color: #8b94a3;
+      box-shadow: 0 0 0 3px rgba(227, 24, 55, .08);
+    }
+
+    .tool-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 640;
+      white-space: nowrap;
+    }
+
+    .tool-button:hover { background: var(--surface-alt); }
+
+    .tool-button.active {
+      border-color: var(--red);
+      background: var(--red-soft);
+      color: var(--red-dark);
+    }
+
+    .switch {
+      width: 38px;
+      height: 22px;
+      padding: 2px;
+      border-radius: 999px;
+      background: #b8c0cc;
+      transition: background .15s;
+    }
+
+    .switch::after {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+      transition: transform .15s;
+    }
+
+    .tool-button.active .switch { background: var(--red); }
+    .tool-button.active .switch::after { transform: translateX(16px); }
+
+    .annotation-palette {
+      display: flex;
+      gap: 5px;
+      margin-left: -5px;
+    }
+
+    .annotation-color {
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: 2px solid #fff;
+      border-radius: 6px;
+      box-shadow: 0 0 0 1px var(--line-strong);
+      cursor: pointer;
+    }
+
+    .annotation-color.active { box-shadow: 0 0 0 2px var(--ink); }
+    .annotation-color[data-color="yellow"] { background: #ffe887; }
+    .annotation-color[data-color="green"] { background: #bcecc6; }
+    .annotation-color[data-color="pink"] { background: #ffc5d0; }
+    .annotation-color[data-color="blue"] { background: #bed9ff; }
+
+    .annotation-clear {
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .annotation-clear:hover { background: var(--surface-alt); color: var(--ink); }
+
+    .font-control {
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .font-control > span {
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .font-control button {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 5px;
+      background: var(--surface-alt);
+      color: #374151;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .font-control button:hover { background: var(--surface-cool); }
+
+    .font-control input {
+      width: 74px;
+      accent-color: var(--red);
+    }
+
+    .font-control output {
+      min-width: 28px;
+      color: #4b5563;
+      text-align: right;
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .search-control {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      min-width: 240px;
+      color: var(--muted);
+    }
+
+    .search-control svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
+
+    .search-control input {
+      min-width: 0;
+      flex: 1;
+      height: 100%;
+      border: 0;
+      outline: 0;
+      padding: 0 10px;
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .search-count {
+      min-width: 44px;
+      padding-right: 12px;
+      color: var(--subtle);
+      text-align: right;
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .main {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      background: #fff;
+    }
+
+    .bandbar {
+      min-height: 54px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 22px;
+      padding: 8px 22px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .band-navigator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .band-label {
+      color: #303744;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .band-direction { font-size: 12px; }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 20px;
+      color: #656d7b;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bold-legend strong {
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.positive { background: var(--positive); }
+    .legend-dot.limit { background: var(--limit); }
+    .legend-dot.control { background: var(--control); }
+    .legend-dot.organize { background: var(--organize); }
+
+    .workspace {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 270px;
+      gap: 18px;
+      padding: 0 18px 16px 22px;
+      background: #fff;
+    }
+
+    .matrix-frame {
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .matrix-scroll {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      scrollbar-color: #b9c0cb #f1f3f6;
+      scrollbar-width: thin;
+      overscroll-behavior: contain;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: var(--band-axis-width) repeat(var(--visible-criteria), minmax(var(--criterion-min-width), 1fr));
+      width: max(100%, var(--matrix-width));
+      min-width: var(--matrix-width);
+      align-items: stretch;
+      background: #fff;
+    }
+
+    .matrix-head,
+    .band-axis-cell,
+    .descriptor-cell {
+      border-right: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .matrix-head {
+      position: sticky;
+      top: 0;
+      z-index: 8;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      background: #fff;
+      color: var(--red);
+      font-size: 16px;
+      font-weight: 820;
+    }
+
+    .matrix-head.corner {
+      left: 0;
+      z-index: 12;
+      justify-content: center;
+      color: #272c35;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .45px;
+    }
+
+    .matrix-head.criterion-head {
+      justify-content: space-between;
+      gap: 10px;
+      padding-inline: 12px;
+      text-align: left;
+    }
+
+    .criterion-head-main {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .criterion-head-main strong {
+      color: #292f38;
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .criterion-head-score {
+      min-width: 30px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface-alt);
+      color: var(--subtle);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .criterion-head-score.has-score {
+      border-color: rgba(227, 24, 55, .35);
+      background: var(--red-soft);
+      color: var(--red-dark);
+    }
+
+    .band-axis-cell {
+      position: sticky;
+      left: 0;
+      z-index: 6;
+      min-height: 148px;
+      display: grid;
+      place-items: center;
+      padding: 10px 4px;
+      background: #f8f9fb;
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 860;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .criterion-category {
+      width: 9px;
+      height: 9px;
+      flex: 0 0 auto;
+      margin-top: 6px;
+      border-radius: 50%;
+      background: var(--category-color, var(--organize));
+    }
+
+    .descriptor-cell {
+      position: relative;
+      min-height: 148px;
+      padding: 16px 18px 18px;
+      background: #fff;
+      cursor: pointer;
+      transition: background .15s, box-shadow .15s;
+    }
+
+    .descriptor-cell:hover { background: #fbfcfd; }
+
+    .descriptor-cell:focus-visible {
+      z-index: 4;
+      outline: 3px solid rgba(227, 24, 55, .22);
+      outline-offset: -3px;
+    }
+
+    .descriptor-cell.selected {
+      z-index: 3;
+      background: linear-gradient(180deg, #fff 0%, var(--red-soft) 100%);
+      box-shadow: inset 0 0 0 2px var(--red);
+    }
+
+    .descriptor-cell.search-match { background: #fffbe8; }
+
+    .descriptor-cell ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .descriptor-cell li {
+      position: relative;
+      margin: 0 0 11px;
+      padding-left: 18px;
+      color: #262b34;
+      font-size: var(--descriptor-size);
+      line-height: 1.48;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    .descriptor-cell li:last-child { margin-bottom: 0; }
+
+    .descriptor-cell li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .59em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--bullet-color, #a2a9b4);
+    }
+
+    .descriptor-cell li[data-category="positive"] { --bullet-color: var(--positive); }
+    .descriptor-cell li[data-category="limit"] { --bullet-color: var(--limit); }
+    .descriptor-cell li[data-category="control"] { --bullet-color: var(--control); }
+    .descriptor-cell li[data-category="organize"] { --bullet-color: var(--organize); }
+
+    .matrix.annotating .descriptor-cell,
+    .matrix.annotating .descriptor-cell li { cursor: text; }
+
+    .manual-mark {
+      border-radius: 3px;
+      padding: 0 1px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    .manual-mark[data-color="yellow"] { background: #fff19a; }
+    .manual-mark[data-color="green"] { background: #bff0cd; }
+    .manual-mark[data-color="pink"] { background: #ffc6d4; }
+    .manual-mark[data-color="blue"] { background: #bcd9ff; }
+
+    .official-bold {
+      color: #111318;
+      font-weight: 850;
+    }
+
+    mark {
+      border-radius: 3px;
+      padding: 0 1px;
+      color: inherit;
+    }
+
+    mark.compare-positive { background: var(--positive-soft); box-shadow: inset 0 -1px 0 var(--positive); }
+    mark.compare-limit { background: var(--limit-soft); box-shadow: inset 0 -1px 0 var(--limit); }
+    mark.compare-control { background: var(--control-soft); box-shadow: inset 0 -1px 0 var(--control); }
+    mark.compare-organize { background: var(--organize-soft); box-shadow: inset 0 -1px 0 var(--organize); }
+    mark.search-hit { background: #ffe16b; box-shadow: inset 0 -1px 0 #b98a00; }
+
+    .score-sidebar {
+      min-height: 0;
+      overflow: auto;
+      padding-top: 0;
+    }
+
+    .score-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 20px 16px;
+    }
+
+    .score-card h2 {
+      margin: 0;
+      color: var(--red);
+      font-size: 17px;
+      font-weight: 820;
+    }
+
+    .score-value {
+      margin: 10px 0 0;
+      color: var(--red);
+      font-size: 58px;
+      font-weight: 790;
+      line-height: 1;
+      letter-spacing: -2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .score-caption {
+      margin-top: 5px;
+      color: var(--subtle);
+      font-size: 12px;
+    }
+
+    .clear-button {
+      min-height: 40px;
+      margin-top: 14px;
+      padding: 0 14px;
+      border: 1px solid var(--red);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--red);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .clear-button:hover { background: var(--red-soft); }
+    .clear-button:disabled { cursor: default; opacity: .45; }
+
+    .score-divider {
+      height: 1px;
+      margin: 20px 0 16px;
+      background: var(--line);
+    }
+
+    .score-section-title {
+      margin-bottom: 12px;
+      color: #2e333c;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: 8px minmax(0, 1fr) 48px;
+      align-items: center;
+      gap: 9px;
+      min-height: 56px;
+    }
+
+    .score-row-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--category-color, var(--organize));
+    }
+
+    .score-row-label {
+      color: #5b6472;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .score-row-value {
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface-alt);
+      color: #7a8290;
+      font-size: 22px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .score-row-value.has-score {
+      border-color: rgba(227, 24, 55, .28);
+      background: var(--red-soft);
+      color: var(--red-dark);
+    }
+
+    .average-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: #7a8290;
+      font-size: 12px;
+    }
+
+    .average-line strong {
+      min-width: 48px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface-alt);
+      color: #394150;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .help-note {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 10px 10px 0;
+      color: #596273;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .info-icon {
+      display: grid;
+      place-items: center;
+      color: #4b5563;
+    }
+
+    .source-note {
+      margin-top: 14px;
+      padding: 12px 10px 0;
+      border-top: 1px solid var(--line);
+      color: var(--subtle);
+      font-size: 10.5px;
+      line-height: 1.45;
+    }
+
+    .profile-view {
+      min-height: 0;
+      overflow: auto;
+      padding: 28px clamp(22px, 4vw, 60px) 42px;
+      background: var(--surface-alt);
+    }
+
+    .profile-sheet {
+      max-width: 1120px;
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .profile-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px 30px 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .profile-heading h1 {
+      margin: 0 0 5px;
+      font-size: 28px;
+      line-height: 1.15;
+      letter-spacing: -.6px;
+    }
+
+    .profile-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .writing-overall {
+      min-width: 190px;
+      text-align: right;
+    }
+
+    .writing-overall span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .writing-overall strong {
+      display: block;
+      color: var(--red);
+      font-size: 38px;
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .profile-section {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr) 120px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .profile-section:last-child { border-bottom: 0; }
+
+    .profile-section-title {
+      padding: 24px 26px;
+      border-right: 1px solid var(--line);
+    }
+
+    .profile-section-title h2 {
+      margin: 0 0 5px;
+      font-size: 17px;
+    }
+
+    .profile-section-title p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .profile-criteria { padding: 14px 24px; }
+
+    .profile-criterion-row {
+      display: grid;
+      grid-template-columns: minmax(190px, 1fr) 84px minmax(160px, 2fr);
+      align-items: center;
+      gap: 16px;
+      min-height: 50px;
+    }
+
+    .profile-criterion-name {
+      color: #3e4653;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .profile-criterion-score {
+      font-weight: 820;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .profile-track {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eceff3;
+    }
+
+    .profile-track span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--red);
+    }
+
+    .profile-result {
+      display: grid;
+      place-items: center;
+      border-left: 1px solid var(--line);
+      color: var(--red);
+      font-size: 32px;
+      font-weight: 820;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .empty-profile {
+      color: var(--subtle);
+      font-size: 13px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 50;
+      transform: translate(-50%, 18px);
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #242832;
+      color: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s, transform .18s;
+      font-size: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 1180px) {
+      .toolbar {
+        grid-template-columns: minmax(320px, auto) minmax(480px, 1fr) minmax(230px, 300px);
+        gap: 12px;
+        padding-inline: 16px;
+      }
+      .select-control { min-width: 160px; }
+      .select-control.wide { min-width: 180px; }
+      .tool-button { padding-inline: 12px; }
+      .legend { gap: 12px; }
+      .workspace { grid-template-columns: minmax(0, 1fr) 240px; padding-left: 16px; }
+    }
+
+    @media (max-width: 940px) {
+      body { overflow: auto; }
+      .app {
+        min-height: 100dvh;
+        height: auto;
+        grid-template-rows: auto auto minmax(620px, 1fr);
+      }
+      .topbar { flex-wrap: wrap; }
+      .brand-block { width: 76px; flex-basis: 76px; }
+      .product-name { min-width: 0; flex: 1; }
+      .primary-tabs { order: 3; width: 100%; height: 44px; padding-left: 12px; border-top: 1px solid var(--line); }
+      .top-actions { padding-right: 10px; }
+      .toolbar {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 12px;
+      }
+      .toolbar-group,
+      .toolbar-group.center,
+      .toolbar-group.end { justify-content: flex-start; flex-wrap: wrap; }
+      .search-control { max-width: none; }
+      .bandbar {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 10px 12px;
+      }
+      .legend { justify-content: flex-start; overflow-x: auto; }
+      .workspace {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(520px, 72vh) auto;
+        padding: 0 12px 24px;
+      }
+      .score-sidebar { overflow: visible; }
+      .score-card {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr);
+        gap: 0 22px;
+      }
+      .score-card > h2,
+      .score-card > .score-value,
+      .score-card > .score-caption,
+      .score-card > .clear-button { grid-column: 1; }
+      .score-card > .score-divider,
+      .score-card > .score-section-title,
+      .score-card > #scoreRows,
+      .score-card > .average-line { grid-column: 2; }
+      .score-divider { margin-top: 0; }
+      .help-note, .source-note { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      :root {
+        --band-axis-width: 44px;
+        --criterion-min-width: 245px;
+      }
+      .top-actions .action-label { display: none; }
+      .brand-block { width: 70px; flex-basis: 70px; font-size: 21px; }
+      .product-name { padding-inline: 12px; font-size: 16px; }
+      .primary-tab { padding-inline: 8px; font-size: 13px; }
+      .toolbar-group:first-child { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+      .select-control, .select-control.wide { min-width: 0; width: 100%; }
+      .toolbar-group.center { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
+      .tool-button { min-width: max-content; }
+      .legend { font-size: 11px; }
+      .workspace { grid-template-rows: minmax(500px, 68vh) auto; }
+      .descriptor-cell { padding: 16px; }
+      .score-card { display: block; }
+      .score-card > .score-divider { margin-top: 20px; }
+      .profile-view { padding: 16px 10px 28px; }
+      .profile-heading { align-items: flex-start; flex-direction: column; padding: 22px 20px; }
+      .writing-overall { text-align: left; }
+      .profile-section { grid-template-columns: 1fr; }
+      .profile-section-title,
+      .profile-result { border: 0; }
+      .profile-section-title { padding-bottom: 8px; }
+      .profile-criteria { padding: 8px 20px 16px; }
+      .profile-result { min-height: 70px; border-top: 1px solid var(--line); }
+      .profile-criterion-row { grid-template-columns: minmax(150px, 1fr) 42px; }
+      .profile-track { grid-column: 1 / -1; margin-bottom: 8px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand-block" aria-label="IELTS">IELTS</div>
+      <div class="product-name">IELTS Rating Scales</div>
+      <nav class="primary-tabs" aria-label="App views">
+        <button class="primary-tab active" type="button" data-view="explorer">Explore descriptors</button>
+        <button class="primary-tab" type="button" data-view="profile">Score profile</button>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-button" type="button" id="helpButton">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.7 9a2.5 2.5 0 0 1 4.8 1c0 1.7-2.5 2-2.5 3.8"></path><path d="M12 17.3h.01"></path></svg>
+          <span class="action-label">Guide</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="toolbar" id="toolbar" aria-label="Rating scale controls">
+      <div class="toolbar-group">
+        <label class="select-control">
+          <span class="control-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M7 18.2 3.8 20v-4A7 7 0 1 1 7 18.2Z"></path><path d="M8 10h.01M12 10h.01M16 10h.01"></path></svg>
+          </span>
+          <select id="sectionSelect" aria-label="Assessment"></select>
+        </label>
+
+        <label class="select-control wide">
+          <span class="control-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 7h12M6 12h12M6 17h8"></path></svg>
+          </span>
+          <select id="criterionSelect" aria-label="Criterion"></select>
+        </label>
+      </div>
+
+      <div class="toolbar-group center">
+        <button class="tool-button active" type="button" id="compareButton" aria-pressed="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h12M7 7l3-3M7 7l3 3M17 17H5M17 17l-3-3M17 17l-3 3"></path></svg>
+          <span>Compare language</span>
+          <span class="switch" aria-hidden="true"></span>
+        </button>
+
+        <button class="tool-button" type="button" id="annotateButton" aria-pressed="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 20 4.3-1 10-10a2 2 0 0 0-3-3l-10 10L4 20Z"></path><path d="m13.5 7.5 3 3"></path></svg>
+          <span>Annotate</span>
+        </button>
+
+        <div class="annotation-palette hidden" id="annotationPalette" aria-label="Annotation color">
+          <button class="annotation-color active" type="button" data-color="yellow" aria-label="Yellow annotation"></button>
+          <button class="annotation-color" type="button" data-color="green" aria-label="Green annotation"></button>
+          <button class="annotation-color" type="button" data-color="pink" aria-label="Pink annotation"></button>
+          <button class="annotation-color" type="button" data-color="blue" aria-label="Blue annotation"></button>
+          <button class="annotation-clear" type="button" id="clearAnnotations">Clear marks</button>
+        </div>
+
+        <div class="font-control" role="group" aria-label="Descriptor text size" title="Descriptor text size">
+          <span>Text</span>
+          <button type="button" id="fontDecrease" aria-label="Decrease descriptor text size">A−</button>
+          <input id="fontSize" type="range" min="11" max="18" step="0.5" value="13" aria-label="Descriptor text size">
+          <button type="button" id="fontIncrease" aria-label="Increase descriptor text size">A+</button>
+          <output id="fontSizeValue" for="fontSize">13</output>
+        </div>
+      </div>
+
+      <div class="toolbar-group end">
+        <label class="search-control">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m16 16 4 4"></path></svg>
+          <input id="searchInput" type="search" placeholder="Search descriptors" autocomplete="off" spellcheck="false">
+          <output class="search-count" id="searchCount"></output>
+        </label>
+      </div>
+    </section>
+
+    <main class="main" id="explorerView">
+      <div class="bandbar">
+        <nav class="band-navigator" id="bandNavigator" aria-label="Band navigator"></nav>
+        <div class="legend" id="legend" aria-label="Comparison language legend">
+          <span class="legend-item compare-legend-item"><span class="legend-dot positive"></span>Positive performance</span>
+          <span class="legend-item compare-legend-item"><span class="legend-dot limit"></span>Limitations</span>
+          <span class="legend-item compare-legend-item"><span class="legend-dot control"></span>Accuracy / control</span>
+          <span class="legend-item compare-legend-item"><span class="legend-dot organize"></span>Organization</span>
+          <span class="legend-item bold-legend hidden" id="boldLegend"><strong>Bold</strong>Official limiting feature</span>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <section class="matrix-frame" aria-label="IELTS band descriptor matrix">
+          <div class="matrix-scroll" id="matrixScroll">
+            <div class="matrix" id="matrix"></div>
+          </div>
+        </section>
+
+        <aside class="score-sidebar">
+          <div class="score-card">
+            <h2 id="scoreTitle">Speaking band</h2>
+            <div class="score-value" id="scoreValue">—</div>
+            <div class="score-caption" id="scoreCaption">Select descriptor cells to build a profile</div>
+            <button class="clear-button" type="button" id="clearScores" disabled>Clear scores</button>
+            <div class="score-divider"></div>
+            <div class="score-section-title">Criterion scores</div>
+            <div id="scoreRows"></div>
+            <div class="average-line"><span>Average of selected criteria</span><strong id="rawAverage">—</strong></div>
+          </div>
+
+          <div class="help-note" id="helpNote">
+            <span class="info-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7.5h.01"></path></svg>
+            </span>
+            <span>Click any descriptor cell to select a score. In annotation mode, drag across text to highlight a phrase, click a plain line to mark the whole line, and right-click a highlight to remove it.</span>
+          </div>
+          <div class="source-note" id="sourceNote"></div>
+        </aside>
+      </div>
+    </main>
+
+    <main class="profile-view hidden" id="profileView">
+      <div class="profile-sheet">
+        <header class="profile-heading">
+          <div>
+            <h1>Score profile</h1>
+            <p>Provisional analytic scores selected in the descriptor explorer.</p>
+          </div>
+          <div class="writing-overall">
+            <span>Weighted Writing band</span>
+            <strong id="writingOverall">—</strong>
+          </div>
+        </header>
+        <div id="profileSections"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="./descriptors.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const data = window.IELTS_DATA;
+      const sectionNames = Object.keys(data.sections);
+      const bands = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
+      const storageKey = "ielts-rating-scales-state-v1";
+      const categoryColors = ["#2ca33a", "#7a3fe0", "#3377e8", "#3377e8"];
+
+      const compareGroups = [
+        {
+          name: "positive",
+          terms: [
+            "effortlessly", "with ease", "fully", "flexibly", "accurately",
+            "appropriately", "effectively", "well developed", "well-developed",
+            "clear progression", "coherent", "relevant", "sufficient",
+            "precise", "natural", "successfully", "error-free", "well controlled",
+            "easily understood", "minimal impact", "wide range", "wide resource",
+            "full flexibility", "skilful", "frequent"
+          ]
+        },
+        {
+          name: "limit",
+          terms: [
+            "limited", "inappropriate", "inaccurate", "error", "errors",
+            "lapses", "faulty", "repetition", "repetitive", "hesitation",
+            "mispronounced", "unintelligible", "impede", "difficulty",
+            "unclear", "inadequate", "rarely", "not always", "may persist",
+            "underlength", "no evidence", "unable", "minimal way"
+          ]
+        },
+        {
+          name: "control",
+          terms: [
+            "control", "accuracy", "grammar", "punctuation", "word choice",
+            "collocation", "spelling", "word formation", "sentence forms",
+            "structures", "vocabulary", "lexical", "phonological"
+          ]
+        },
+        {
+          name: "organize",
+          terms: [
+            "cohesion", "cohesive", "coherence", "paragraphing", "progression",
+            "sequenced", "organised", "organized", "connectives",
+            "discourse markers", "topic development", "position", "main ideas",
+            "overview", "support", "extended", "illustrated"
+          ]
+        }
+      ];
+
+      const state = {
+        section: "Speaking",
+        criterion: "__all",
+        view: "explorer",
+        compare: true,
+        annotate: false,
+        annotationColor: "yellow",
+        fontSize: 13,
+        query: "",
+        activeBand: 9,
+        scores: Object.fromEntries(sectionNames.map(name => [
+          name,
+          Object.fromEntries(data.sections[name].criteria.map(criterion => [criterion, null]))
+        ])),
+        annotations: {}
+      };
+
+      const $ = selector => document.querySelector(selector);
+      const $$ = selector => [...document.querySelectorAll(selector)];
+      const escapeHtml = value => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+      const escapeRegExp = value => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const roundHalf = value => Math.round(value * 2) / 2;
+      const formatBand = value => value == null || Number.isNaN(value) ? "—" : value.toFixed(1);
+      const descriptorText = descriptor => typeof descriptor === "string" ? descriptor : descriptor.text;
+      const descriptorBold = descriptor => Array.isArray(descriptor?.bold) ? descriptor.bold : [];
+
+      function descriptorForKey(key) {
+        const [section, criterion, band, indexText] = key.split("|");
+        return data.sections?.[section]?.bands?.[band]?.[criterion]?.[Number(indexText)];
+      }
+
+      function normalizeAnnotations(savedAnnotations) {
+        const normalized = {};
+        Object.entries(savedAnnotations || {}).forEach(([key, value]) => {
+          const text = descriptorText(descriptorForKey(key) || "");
+          if (!text) return;
+          if (typeof value === "string") {
+            normalized[key] = [{ start: 0, end: text.length, color: value }];
+            return;
+          }
+          if (!Array.isArray(value)) return;
+          const ranges = value
+            .map(range => ({
+              start: Math.max(0, Number(range.start) || 0),
+              end: Math.min(text.length, Number(range.end) || 0),
+              color: ["yellow", "green", "pink", "blue"].includes(range.color) ? range.color : "yellow"
+            }))
+            .filter(range => range.start < range.end)
+            .sort((a, b) => a.start - b.start);
+          if (ranges.length) normalized[key] = ranges;
+        });
+        return normalized;
+      }
+
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+          if (!saved) return;
+          if (sectionNames.includes(saved.section)) state.section = saved.section;
+          if (typeof saved.compare === "boolean") state.compare = saved.compare;
+          if (Number.isFinite(saved.fontSize)) {
+            state.fontSize = Math.max(11, Math.min(18, saved.fontSize));
+          }
+          if (saved.scores) {
+            sectionNames.forEach(section => {
+              data.sections[section].criteria.forEach(criterion => {
+                const value = saved.scores?.[section]?.[criterion];
+                if (Number.isInteger(value) && value >= 0 && value <= 9) {
+                  state.scores[section][criterion] = value;
+                }
+              });
+            });
+          }
+          if (saved.annotations && typeof saved.annotations === "object") {
+            state.annotations = normalizeAnnotations(saved.annotations);
+          }
+        } catch (_) {
+          localStorage.removeItem(storageKey);
+        }
+      }
+
+      function saveState() {
+        localStorage.setItem(storageKey, JSON.stringify({
+          section: state.section,
+          compare: state.compare,
+          fontSize: state.fontSize,
+          scores: state.scores,
+          annotations: state.annotations
+        }));
+      }
+
+      function showToast(message) {
+        const toast = $("#toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => toast.classList.remove("show"), 1800);
+      }
+
+      function selectedValues(sectionName) {
+        return data.sections[sectionName].criteria
+          .map(criterion => state.scores[sectionName][criterion])
+          .filter(value => value != null);
+      }
+
+      function sectionResult(sectionName) {
+        const values = selectedValues(sectionName);
+        if (!values.length) return { raw: null, reported: null, complete: false };
+        const raw = values.reduce((sum, value) => sum + value, 0) / values.length;
+        return {
+          raw,
+          reported: roundHalf(raw),
+          complete: values.length === data.sections[sectionName].criteria.length
+        };
+      }
+
+      function writingResult() {
+        const task1 = sectionResult("Writing Task 1");
+        const task2 = sectionResult("Writing Task 2");
+        if (!task1.complete || !task2.complete) return null;
+        return roundHalf((task1.raw + 2 * task2.raw) / 3);
+      }
+
+      function categoryForText(text) {
+        const lower = text.toLowerCase();
+        if (compareGroups[1].terms.some(term => lower.includes(term))) return "limit";
+        if (compareGroups[3].terms.some(term => lower.includes(term))) return "organize";
+        if (compareGroups[2].terms.some(term => lower.includes(term))) return "control";
+        if (compareGroups[0].terms.some(term => lower.includes(term))) return "positive";
+        return "neutral";
+      }
+
+      function comparisonRanges(text) {
+        if (!state.compare) return [];
+        const matches = [];
+        compareGroups.forEach((group, groupIndex) => {
+          group.terms.forEach(term => {
+            const expression = new RegExp(escapeRegExp(term), "ig");
+            let match;
+            while ((match = expression.exec(text))) {
+              matches.push({
+                start: match.index,
+                end: match.index + match[0].length,
+                name: group.name,
+                priority: groupIndex,
+                length: match[0].length
+              });
+              if (!match[0].length) expression.lastIndex += 1;
+            }
+          });
+        });
+        matches.sort((a, b) => b.length - a.length || a.priority - b.priority || a.start - b.start);
+        const accepted = [];
+        matches.forEach(candidate => {
+          if (!accepted.some(item => candidate.start < item.end && candidate.end > item.start)) {
+            accepted.push(candidate);
+          }
+        });
+        return accepted.sort((a, b) => a.start - b.start);
+      }
+
+      function searchRanges(text) {
+        const query = state.query.trim();
+        if (!query) return [];
+        const ranges = [];
+        const expression = new RegExp(escapeRegExp(query), "ig");
+        let match;
+        while ((match = expression.exec(text))) {
+          ranges.push({ start: match.index, end: match.index + match[0].length });
+          if (!match[0].length) expression.lastIndex += 1;
+        }
+        return ranges;
+      }
+
+      function rangeAt(ranges, start, end) {
+        return ranges.find(range => range.start <= start && range.end >= end);
+      }
+
+      function renderedDescriptor(descriptor, key) {
+        const text = descriptorText(descriptor);
+        const boldRanges = descriptorBold(descriptor).map(([start, end]) => ({ start, end }));
+        const manualRanges = state.annotations[key] || [];
+        const queryRanges = searchRanges(text);
+        const compareRanges = state.query.trim() ? [] : comparisonRanges(text);
+        const boundaries = new Set([0, text.length]);
+        [...boldRanges, ...manualRanges, ...queryRanges, ...compareRanges].forEach(range => {
+          boundaries.add(Math.max(0, range.start));
+          boundaries.add(Math.min(text.length, range.end));
+        });
+        const points = [...boundaries].sort((a, b) => a - b);
+        let html = "";
+        for (let index = 0; index < points.length - 1; index += 1) {
+          const start = points[index];
+          const end = points[index + 1];
+          if (start >= end) continue;
+          let segment = escapeHtml(text.slice(start, end));
+          if (rangeAt(boldRanges, start, end)) {
+            segment = `<strong class="official-bold">${segment}</strong>`;
+          }
+          const compare = rangeAt(compareRanges, start, end);
+          const query = rangeAt(queryRanges, start, end);
+          if (compare) segment = `<mark class="compare-${compare.name}">${segment}</mark>`;
+          if (query) segment = `<mark class="search-hit">${segment}</mark>`;
+          const manual = rangeAt(manualRanges, start, end);
+          if (manual) {
+            segment = `<mark class="manual-mark" data-annotation-key="${escapeHtml(key)}" data-mark-start="${manual.start}" data-mark-end="${manual.end}" data-color="${manual.color}">${segment}</mark>`;
+          }
+          html += segment;
+        }
+        return html;
+      }
+
+      function annotationKey(section, criterion, band, index) {
+        return [section, criterion, band, index].join("|");
+      }
+
+      function initializeControls() {
+        $("#sectionSelect").innerHTML = sectionNames
+          .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`)
+          .join("");
+        $("#sectionSelect").value = state.section;
+        renderCriterionOptions();
+        renderBandNavigator();
+        syncToolbar();
+        $("#sourceNote").textContent = data.meta.sourceNote;
+      }
+
+      function renderCriterionOptions() {
+        const criteria = data.sections[state.section].criteria;
+        if (state.criterion !== "__all" && !criteria.includes(state.criterion)) {
+          state.criterion = "__all";
+        }
+        $("#criterionSelect").innerHTML = [
+          '<option value="__all">All criteria</option>',
+          ...criteria.map(criterion => `<option value="${escapeHtml(criterion)}">${escapeHtml(criterion)}</option>`)
+        ].join("");
+        $("#criterionSelect").value = state.criterion;
+      }
+
+      function renderBandNavigator() {
+        $("#bandNavigator").innerHTML = `
+          <span class="band-label">Vertical band scale</span>
+          <span class="band-direction">Band 9 at the top · Band 0 at the bottom</span>`;
+      }
+
+      function syncToolbar() {
+        $("#compareButton").classList.toggle("active", state.compare);
+        $("#compareButton").setAttribute("aria-pressed", String(state.compare));
+        $("#annotateButton").classList.toggle("active", state.annotate);
+        $("#annotateButton").setAttribute("aria-pressed", String(state.annotate));
+        $("#annotationPalette").classList.toggle("hidden", !state.annotate);
+        $$(".compare-legend-item").forEach(item => item.classList.toggle("hidden", !state.compare));
+        $("#boldLegend").classList.toggle("hidden", state.section === "Speaking");
+        $("#matrix").classList.toggle("annotating", state.annotate);
+        document.documentElement.style.setProperty("--descriptor-size", `${state.fontSize}px`);
+        $("#fontSize").value = state.fontSize;
+        $("#fontSizeValue").textContent = Number.isInteger(state.fontSize) ? String(state.fontSize) : state.fontSize.toFixed(1);
+        $$(".annotation-color").forEach(button => {
+          button.classList.toggle("active", button.dataset.color === state.annotationColor);
+        });
+      }
+
+      function renderMatrix({ preserveScroll = true } = {}) {
+        const scroll = $("#matrixScroll");
+        const previousLeft = preserveScroll ? scroll.scrollLeft : 0;
+        const previousTop = preserveScroll ? scroll.scrollTop : 0;
+        const section = data.sections[state.section];
+        const criteria = state.criterion === "__all" ? section.criteria : [state.criterion];
+        const query = state.query.trim().toLowerCase();
+        let matchCount = 0;
+        const matrix = $("#matrix");
+        matrix.style.setProperty("--visible-criteria", criteria.length);
+        matrix.style.gridTemplateColumns = `var(--band-axis-width) repeat(${criteria.length}, minmax(var(--criterion-min-width), 1fr))`;
+        matrix.style.setProperty(
+          "--matrix-width",
+          `calc(var(--band-axis-width) + ${criteria.map(() => "var(--criterion-min-width)").join(" + ")})`
+        );
+
+        const header = [
+          '<div class="matrix-head corner">Band</div>',
+          ...criteria.map(criterion => {
+            const criterionIndex = section.criteria.indexOf(criterion);
+            const selectedScore = state.scores[state.section][criterion];
+            return `
+              <div class="matrix-head criterion-head" style="--category-color:${categoryColors[criterionIndex] || categoryColors[3]}">
+                <span class="criterion-head-main">
+                  <span class="criterion-category" aria-hidden="true"></span>
+                  <strong>${escapeHtml(criterion)}</strong>
+                </span>
+                <span class="criterion-head-score ${selectedScore != null ? "has-score" : ""}">${selectedScore ?? "—"}</span>
+              </div>`;
+          })
+        ].join("");
+
+        const rows = bands.map(band => {
+          const cells = criteria.map(criterion => {
+            const descriptors = section.bands[String(band)][criterion] || [];
+            const matchingDescriptors = descriptors.filter(descriptor =>
+              descriptorText(descriptor).toLowerCase().includes(query)
+            );
+            const cellMatches = Boolean(query && matchingDescriptors.length);
+            if (cellMatches) matchCount += matchingDescriptors.length;
+            const selected = state.scores[state.section][criterion] === band;
+            const bullets = descriptors.map((descriptor, index) => {
+              const text = descriptorText(descriptor);
+              const key = annotationKey(state.section, criterion, band, index);
+              return `<li data-annotation-key="${escapeHtml(key)}" data-category="${categoryForText(text)}">${renderedDescriptor(descriptor, key)}</li>`;
+            }).join("");
+            return `
+              <div class="descriptor-cell ${selected ? "selected" : ""} ${cellMatches ? "search-match" : ""}"
+                   data-criterion="${escapeHtml(criterion)}"
+                   data-band="${band}"
+                   role="button"
+                   tabindex="0"
+                   aria-pressed="${selected}"
+                   aria-label="Set ${escapeHtml(criterion)} to Band ${band}">
+                <ul>${bullets}</ul>
+              </div>`;
+          }).join("");
+          return `<div class="band-axis-cell" data-band-axis="${band}">${band}</div>${cells}`;
+        }).join("");
+
+        matrix.innerHTML = header + rows;
+        $("#searchCount").textContent = state.query ? `${matchCount} ${matchCount === 1 ? "match" : "matches"}` : "";
+        requestAnimationFrame(() => {
+          scroll.scrollLeft = previousLeft;
+          scroll.scrollTop = previousTop;
+          if (!preserveScroll && state.query && matchCount) {
+            const firstMatch = $(".descriptor-cell.search-match");
+            firstMatch?.scrollIntoView({ block: "center", inline: "center", behavior: "smooth" });
+          }
+        });
+      }
+
+      function renderScoreSidebar() {
+        const section = data.sections[state.section];
+        const result = sectionResult(state.section);
+        const values = selectedValues(state.section);
+        $("#scoreTitle").textContent = `${section.shortLabel} band`;
+        $("#scoreValue").textContent = formatBand(result.reported);
+        $("#scoreCaption").textContent = result.complete
+          ? "Provisional reported band"
+          : values.length
+            ? `${values.length} of ${section.criteria.length} criteria selected`
+            : "Select descriptor cells to build a profile";
+        $("#rawAverage").textContent = result.raw == null ? "—" : result.raw.toFixed(2);
+        $("#clearScores").disabled = values.length === 0;
+
+        $("#scoreRows").innerHTML = section.criteria.map((criterion, index) => {
+          const value = state.scores[state.section][criterion];
+          return `
+            <div class="score-row" style="--category-color:${categoryColors[index] || categoryColors[3]}">
+              <span class="score-row-dot" aria-hidden="true"></span>
+              <span class="score-row-label">${escapeHtml(criterion)}</span>
+              <span class="score-row-value ${value != null ? "has-score" : ""}">${value ?? "—"}</span>
+            </div>`;
+        }).join("");
+
+        $("#helpNote").querySelector("span:last-child").textContent =
+          `${section.note} Click a descriptor cell to select its band. In annotation mode, drag across a phrase to highlight it; right-click a highlight to remove it.`;
+      }
+
+      function renderProfile() {
+        $("#writingOverall").textContent = formatBand(writingResult());
+        $("#profileSections").innerHTML = sectionNames.map(sectionName => {
+          const section = data.sections[sectionName];
+          const result = sectionResult(sectionName);
+          const chosen = selectedValues(sectionName).length;
+          const criteriaRows = section.criteria.map(criterion => {
+            const value = state.scores[sectionName][criterion];
+            return `
+              <div class="profile-criterion-row">
+                <span class="profile-criterion-name">${escapeHtml(criterion)}</span>
+                <span class="profile-criterion-score">${value ?? "—"}</span>
+                <span class="profile-track" aria-hidden="true"><span style="width:${value == null ? 0 : (value / 9) * 100}%"></span></span>
+              </div>`;
+          }).join("");
+          return `
+            <section class="profile-section">
+              <div class="profile-section-title">
+                <h2>${escapeHtml(sectionName)}</h2>
+                <p>${chosen} of ${section.criteria.length} criteria selected</p>
+              </div>
+              <div class="profile-criteria">${criteriaRows}</div>
+              <div class="profile-result" aria-label="${escapeHtml(sectionName)} reported band">${formatBand(result.reported)}</div>
+            </section>`;
+        }).join("");
+      }
+
+      function renderAll(options) {
+        renderMatrix(options);
+        renderScoreSidebar();
+        renderProfile();
+        saveState();
+      }
+
+      function selectScore(cell) {
+        const criterion = cell.dataset.criterion;
+        const band = Number(cell.dataset.band);
+        state.scores[state.section][criterion] =
+          state.scores[state.section][criterion] === band ? null : band;
+        renderAll();
+      }
+
+      function setFontSize(value) {
+        state.fontSize = Math.max(11, Math.min(18, Math.round(Number(value) * 2) / 2));
+        syncToolbar();
+        saveState();
+      }
+
+      function addAnnotationRange(key, start, end, color = state.annotationColor) {
+        const text = descriptorText(descriptorForKey(key) || "");
+        let safeStart = Math.max(0, Math.min(text.length, start));
+        let safeEnd = Math.max(0, Math.min(text.length, end));
+        while (safeStart < safeEnd && /\s/.test(text[safeStart])) safeStart += 1;
+        while (safeEnd > safeStart && /\s/.test(text[safeEnd - 1])) safeEnd -= 1;
+        if (safeStart >= safeEnd) return false;
+        const ranges = (state.annotations[key] || [])
+          .filter(range => safeEnd <= range.start || safeStart >= range.end);
+        ranges.push({ start: safeStart, end: safeEnd, color });
+        ranges.sort((a, b) => a.start - b.start);
+        state.annotations[key] = ranges;
+        return true;
+      }
+
+      function removeAnnotationRange(key, start, end) {
+        const ranges = (state.annotations[key] || [])
+          .filter(range => range.start !== start || range.end !== end);
+        if (ranges.length) state.annotations[key] = ranges;
+        else delete state.annotations[key];
+      }
+
+      function toggleWholeLineAnnotation(line) {
+        const key = line.dataset.annotationKey;
+        const text = descriptorText(descriptorForKey(key) || "");
+        if (!key || !text) return;
+        const ranges = state.annotations[key] || [];
+        const full = ranges.find(range => range.start === 0 && range.end === text.length);
+        if (full && full.color === state.annotationColor) {
+          removeAnnotationRange(key, 0, text.length);
+        } else {
+          state.annotations[key] = [{ start: 0, end: text.length, color: state.annotationColor }];
+        }
+        renderAll();
+      }
+
+      function selectionOffsets(line, range) {
+        const before = document.createRange();
+        before.selectNodeContents(line);
+        before.setEnd(range.startContainer, range.startOffset);
+        const start = before.toString().length;
+        return { start, end: start + range.toString().length };
+      }
+
+      function applyAnnotationSelection() {
+        if (!state.annotate) return;
+        const selection = window.getSelection();
+        if (!selection || selection.isCollapsed || !selection.rangeCount) return;
+        const range = selection.getRangeAt(0);
+        let startNode = range.startContainer.nodeType === Node.TEXT_NODE
+          ? range.startContainer.parentElement
+          : range.startContainer;
+        let endNode = range.endContainer.nodeType === Node.TEXT_NODE
+          ? range.endContainer.parentElement
+          : range.endContainer;
+        const line = startNode?.closest?.("li[data-annotation-key]");
+        if (!line || line !== endNode?.closest?.("li[data-annotation-key]")) return;
+        const { start, end } = selectionOffsets(line, range);
+        if (!addAnnotationRange(line.dataset.annotationKey, start, end)) return;
+        selection.removeAllRanges();
+        renderAll();
+      }
+
+      let annotationPointerStart = null;
+      let annotationDragged = false;
+
+      function switchView(view) {
+        state.view = view;
+        $$(".primary-tab").forEach(button => {
+          button.classList.toggle("active", button.dataset.view === view);
+        });
+        $("#toolbar").classList.toggle("hidden", view !== "explorer");
+        $("#explorerView").classList.toggle("hidden", view !== "explorer");
+        $("#profileView").classList.toggle("hidden", view !== "profile");
+        if (view === "profile") renderProfile();
+      }
+
+      loadState();
+      initializeControls();
+      renderAll({ preserveScroll: false });
+
+      $("#sectionSelect").addEventListener("change", event => {
+        state.section = event.target.value;
+        state.criterion = "__all";
+        state.activeBand = 9;
+        renderCriterionOptions();
+        renderBandNavigator();
+        syncToolbar();
+        renderAll({ preserveScroll: false });
+        $("#matrixScroll").scrollTo({ left: 0, top: 0 });
+      });
+
+      $("#criterionSelect").addEventListener("change", event => {
+        state.criterion = event.target.value;
+        renderAll({ preserveScroll: false });
+      });
+
+      $("#compareButton").addEventListener("click", () => {
+        state.compare = !state.compare;
+        syncToolbar();
+        renderMatrix();
+        saveState();
+      });
+
+      $("#annotateButton").addEventListener("click", () => {
+        state.annotate = !state.annotate;
+        syncToolbar();
+        showToast(state.annotate ? "Annotation mode on" : "Annotation mode off");
+      });
+
+      $("#annotationPalette").addEventListener("click", event => {
+        const button = event.target.closest("[data-color]");
+        if (!button) return;
+        state.annotationColor = button.dataset.color;
+        syncToolbar();
+      });
+
+      $("#clearAnnotations").addEventListener("click", () => {
+        state.annotations = {};
+        renderAll();
+        showToast("Annotations cleared");
+      });
+
+      $("#fontSize").addEventListener("input", event => setFontSize(event.target.value));
+      $("#fontDecrease").addEventListener("click", () => setFontSize(state.fontSize - 0.5));
+      $("#fontIncrease").addEventListener("click", () => setFontSize(state.fontSize + 0.5));
+
+      $("#searchInput").addEventListener("input", event => {
+        state.query = event.target.value;
+        renderMatrix({ preserveScroll: !state.query });
+      });
+
+      $("#matrix").addEventListener("click", event => {
+        const line = event.target.closest("li[data-annotation-key]");
+        if (state.annotate) {
+          event.stopPropagation();
+          if (annotationDragged) return;
+          if (!line) return;
+          const mark = event.target.closest(".manual-mark");
+          if (mark) {
+            removeAnnotationRange(
+              mark.dataset.annotationKey,
+              Number(mark.dataset.markStart),
+              Number(mark.dataset.markEnd)
+            );
+            renderAll();
+            return;
+          }
+          toggleWholeLineAnnotation(line);
+          return;
+        }
+        const cell = event.target.closest(".descriptor-cell");
+        if (cell) selectScore(cell);
+      });
+
+      $("#matrix").addEventListener("keydown", event => {
+        if (state.annotate || !["Enter", " "].includes(event.key)) return;
+        const cell = event.target.closest(".descriptor-cell");
+        if (!cell) return;
+        event.preventDefault();
+        selectScore(cell);
+      });
+
+      $("#matrix").addEventListener("mousedown", event => {
+        if (!state.annotate || !event.target.closest("li[data-annotation-key]")) return;
+        annotationPointerStart = { x: event.clientX, y: event.clientY };
+        annotationDragged = false;
+      });
+
+      $("#matrix").addEventListener("mousemove", event => {
+        if (!annotationPointerStart) return;
+        annotationDragged = Math.hypot(
+          event.clientX - annotationPointerStart.x,
+          event.clientY - annotationPointerStart.y
+        ) > 4;
+      });
+
+      $("#matrix").addEventListener("mouseup", () => {
+        setTimeout(() => {
+          applyAnnotationSelection();
+          annotationPointerStart = null;
+          annotationDragged = false;
+        }, 0);
+      });
+
+      $("#matrix").addEventListener("contextmenu", event => {
+        const mark = event.target.closest(".manual-mark");
+        if (!mark) return;
+        event.preventDefault();
+        removeAnnotationRange(
+          mark.dataset.annotationKey,
+          Number(mark.dataset.markStart),
+          Number(mark.dataset.markEnd)
+        );
+        renderAll();
+      });
+
+      $("#clearScores").addEventListener("click", () => {
+        data.sections[state.section].criteria.forEach(criterion => {
+          state.scores[state.section][criterion] = null;
+        });
+        renderAll();
+        showToast(`${data.sections[state.section].shortLabel} scores cleared`);
+      });
+
+      $(".primary-tabs").addEventListener("click", event => {
+        const button = event.target.closest("[data-view]");
+        if (button) switchView(button.dataset.view);
+      });
+
+      $("#helpButton").addEventListener("click", () => {
+        if (state.view !== "explorer") switchView("explorer");
+        $("#helpNote").scrollIntoView({ behavior: "smooth", block: "center" });
+        $("#helpNote").animate(
+          [{ background: "#fff1f3" }, { background: "transparent" }],
+          { duration: 900, easing: "ease-out" }
+        );
+      });
+    })();
+  </script>
+</body>
+</html>
