@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import statistics
 from pathlib import Path
 
 import pdfplumber
@@ -106,41 +107,83 @@ def bold_phrases(page: pdfplumber.page.Page, bbox: tuple | None) -> list[str]:
     return [phrase for phrase in phrases if phrase]
 
 
-def descriptor_chunks(
+def paragraph_texts(
+    page: pdfplumber.page.Page,
+    bbox: tuple | None,
+    fallback: str | None,
+) -> list[str]:
+    if not bbox:
+        return [clean_text(fallback)] if clean_text(fallback) else []
+    x0, top, x1, bottom = bbox
+    safe_bbox = (
+        max(0, x0),
+        max(0, top),
+        min(page.width, x1),
+        min(page.height, bottom),
+    )
+    lines = page.crop(safe_bbox).extract_text_lines(
+        layout=False,
+        strip=True,
+        return_chars=True,
+    )
+    if not lines:
+        return [clean_text(fallback)] if clean_text(fallback) else []
+
+    sizes = [
+        char.get("size", 0)
+        for line in lines
+        for char in line.get("chars", [])
+        if char.get("text", "").strip()
+    ]
+    paragraph_gap = max(4.5, (statistics.median(sizes) if sizes else 9) * 0.65)
+    paragraphs: list[list[str]] = []
+    current: list[str] = []
+    previous_bottom: float | None = None
+
+    for line in lines:
+        line_text = clean_text(line["text"])
+        if not line_text:
+            continue
+        gap = 0 if previous_bottom is None else line["top"] - previous_bottom
+        if current and gap > paragraph_gap:
+            paragraphs.append(current)
+            current = []
+        current.append(line_text)
+        previous_bottom = line["bottom"]
+    if current:
+        paragraphs.append(current)
+
+    return [
+        clean_text(" ".join(lines_in_paragraph))
+        for lines_in_paragraph in paragraphs
+        if clean_text(" ".join(lines_in_paragraph))
+    ]
+
+
+def descriptor_paragraphs(
+    page: pdfplumber.page.Page,
+    bbox: tuple | None,
     value: str | None,
     bold_values: list[str],
 ) -> list[dict[str, object]]:
-    full_text = clean_text(value)
-    if not full_text:
-        return []
-
-    bold_ranges: list[tuple[int, int]] = []
-    search_from = 0
-    for phrase in bold_values:
-        start = full_text.lower().find(phrase.lower(), search_from)
-        if start < 0:
-            start = full_text.lower().find(phrase.lower())
-        if start >= 0:
-            bold_ranges.append((start, start + len(phrase)))
-            search_from = start + len(phrase)
-
     result: list[dict[str, object]] = []
-    cursor = 0
-    for chunk in sentence_chunks(full_text):
-        start = full_text.find(chunk, cursor)
-        if start < 0:
-            start = full_text.find(chunk)
-        if start < 0:
-            start = cursor
-        end = start + len(chunk)
+    paragraphs = paragraph_texts(page, bbox, value)
+    unused_bold = list(bold_values)
+    for paragraph in paragraphs:
         spans = []
-        for bold_start, bold_end in bold_ranges:
-            overlap_start = max(start, bold_start)
-            overlap_end = min(end, bold_end)
-            if overlap_start < overlap_end:
-                spans.append([overlap_start - start, overlap_end - start])
-        result.append({"text": chunk, "bold": spans})
-        cursor = end
+        remaining = []
+        search_from = 0
+        for phrase in unused_bold:
+            start = paragraph.lower().find(phrase.lower(), search_from)
+            if start < 0:
+                start = paragraph.lower().find(phrase.lower())
+            if start >= 0:
+                spans.append([start, start + len(phrase)])
+                search_from = start + len(phrase)
+            else:
+                remaining.append(phrase)
+        unused_bold = remaining
+        result.append({"text": paragraph, "bold": spans})
     return result
 
 
@@ -172,11 +215,14 @@ def extract_section(
                 ]
                 if band == "0" and cells and not any(cells[1:]):
                     cells = [cells[0]] * 4
+                    cell_boxes = [cell_boxes[0]] * 4
                     bold_cells = [bold_cells[0]] * 4
                 result[band] = {
-                    criterion: descriptor_chunks(cell, bold_cell)
-                    for criterion, cell, bold_cell in zip(
-                        criteria, cells, bold_cells, strict=True
+                    criterion: descriptor_paragraphs(
+                        page, bbox, cell, bold_cell
+                    )
+                    for criterion, bbox, cell, bold_cell in zip(
+                        criteria, cell_boxes, cells, bold_cells, strict=True
                     )
                 }
     expected = {str(band) for band in range(10)}

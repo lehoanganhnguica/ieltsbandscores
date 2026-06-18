@@ -107,11 +107,7 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "Occasional inappropriacies and non-systematic errors occur.",
-              "bold": []
-            },
-            {
-              "text": "A few basic errors may persist.",
+              "text": "Occasional inappropriacies and non-systematic errors occur. A few basic errors may persist.",
               "bold": []
             }
           ],
@@ -121,11 +117,7 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "Can sustain appropriate rhythm.",
-              "bold": []
-            },
-            {
-              "text": "Flexible use of stress and intonation across long utterances, despite occasional lapses.",
+              "text": "Can sustain appropriate rhythm. Flexible use of stress and intonation across long utterances, despite occasional lapses.",
               "bold": []
             },
             {
@@ -145,11 +137,7 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "Some hesitation, repetition and/or self-correction may occur, often mid-sentence and indicate problems with accessing appropriate language.",
-              "bold": []
-            },
-            {
-              "text": "However, these will not affect coherence.",
+              "text": "Some hesitation, repetition and/or self-correction may occur, often mid-sentence and indicate problems with accessing appropriate language. However, these will not affect coherence.",
               "bold": []
             },
             {
@@ -173,19 +161,11 @@ window.IELTS_DATA = {
           ],
           "Grammatical range and accuracy": [
             {
-              "text": "A range of structures flexibly used.",
+              "text": "A range of structures flexibly used. Error-free sentences are frequent.",
               "bold": []
             },
             {
-              "text": "Error-free sentences are frequent.",
-              "bold": []
-            },
-            {
-              "text": "Both simple and complex sentences are used effectively despite some errors.",
-              "bold": []
-            },
-            {
-              "text": "A few basic errors persist.",
+              "text": "Both simple and complex sentences are used effectively despite some errors. A few basic errors persist.",
               "bold": []
             }
           ],
@@ -353,23 +333,7 @@ window.IELTS_DATA = {
           ],
           "Pronunciation": [
             {
-              "text": "Uses some acceptable phonological features, but the range is limited.",
-              "bold": []
-            },
-            {
-              "text": "Produces some acceptable chunking, but there are frequent lapses in overall rhythm.",
-              "bold": []
-            },
-            {
-              "text": "Attempts to use intonation and stress, but control is limited.",
-              "bold": []
-            },
-            {
-              "text": "Individual words or phonemes are frequently mispronounced, causing lack of clarity.",
-              "bold": []
-            },
-            {
-              "text": "Understanding requires some effort and there may be patches of speech that cannot be understood.",
+              "text": "Uses some acceptable phonological features, but the range is limited. Produces some acceptable chunking, but there are frequent lapses in overall rhythm. Attempts to use intonation and stress, but control is limited. Individual words or phonemes are frequently mispronounced, causing lack of clarity. Understanding requires some effort and there may be patches of speech that cannot be understood.",
               "bold": []
             }
           ]
@@ -425,11 +389,7 @@ window.IELTS_DATA = {
           ],
           "Lexical resource": [
             {
-              "text": "Very limited resource.",
-              "bold": []
-            },
-            {
-              "text": "Utterances consist of isolated words or memorised utterances.",
+              "text": "Very limited resource. Utterances consist of isolated words or memorised utterances.",
               "bold": []
             },
             {
@@ -669,11 +629,7 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "The content is relevant and accurate – there may be a few omissions or lapses.",
-              "bold": []
-            },
-            {
-              "text": "The format is appropriate.",
+              "text": "The content is relevant and accurate – there may be a few omissions or lapses. The format is appropriate.",
               "bold": []
             },
             {
@@ -685,29 +641,13 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "(General Training) All bullet points are covered and clearly highlighted but could be more fully or more appropriately illustrated or extended.",
-              "bold": []
-            },
-            {
-              "text": "It presents a clear purpose.",
-              "bold": []
-            },
-            {
-              "text": "The tone is consistent and appropriate to the task.",
-              "bold": []
-            },
-            {
-              "text": "Any lapses are minimal.",
+              "text": "(General Training) All bullet points are covered and clearly highlighted but could be more fully or more appropriately illustrated or extended. It presents a clear purpose. The tone is consistent and appropriate to the task. Any lapses are minimal.",
               "bold": []
             }
           ],
           "Coherence and cohesion": [
             {
-              "text": "Information and ideas are logically organised and there is a clear progression throughout the response.",
-              "bold": []
-            },
-            {
-              "text": "A few lapses may occur.",
+              "text": "Information and ideas are logically organised and there is a clear progression throughout the response. A few lapses may occur.",
               "bold": []
             },
             {
@@ -755,27 +695,11 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "(Academic) Key features which are selected are covered and adequately highlighted.",
+              "text": "(Academic) Key features which are selected are covered and adequately highlighted. A relevant overview is attempted. Information is appropriately selected and supported using figures/data.",
               "bold": []
             },
             {
-              "text": "A relevant overview is attempted.",
-              "bold": []
-            },
-            {
-              "text": "Information is appropriately selected and supported using figures/data.",
-              "bold": []
-            },
-            {
-              "text": "(General Training) All bullet points are covered and adequately highlighted.",
-              "bold": []
-            },
-            {
-              "text": "The purpose is generally clear.",
-              "bold": []
-            },
-            {
-              "text": "There may be minor inconsistencies in tone.",
+              "text": "(General Training) All bullet points are covered and adequately highlighted. The purpose is generally clear. There may be minor inconsistencies in tone.",
               "bold": []
             },
             {
@@ -837,40 +761,20 @@ window.IELTS_DATA = {
         "5": {
           "Task achievement": [
             {
-              "text": "The response generally addresses the requirements of the task.",
+              "text": "The response generally addresses the requirements of the task. The format may be inappropriate in places.",
               "bold": []
             },
             {
-              "text": "The format may be inappropriate in places.",
-              "bold": []
-            },
-            {
-              "text": "(Academic) Key features which are selected are not adequately covered.",
-              "bold": []
-            },
-            {
-              "text": "The recounting of detail is mainly mechanical.",
-              "bold": []
-            },
-            {
-              "text": "There may be no data to support the description.",
+              "text": "(Academic) Key features which are selected are not adequately covered. The recounting of detail is mainly mechanical. There may be no data to support the description.",
               "bold": [
                 [
-                  0,
-                  48
+                  118,
+                  166
                 ]
               ]
             },
             {
-              "text": "(General Training) All bullet points are presented but one or more may not be adequately covered.",
-              "bold": []
-            },
-            {
-              "text": "The purpose may be unclear at times.",
-              "bold": []
-            },
-            {
-              "text": "The tone may be variable and sometimes inappropriate.",
+              "text": "(General Training) All bullet points are presented but one or more may not be adequately covered. The purpose may be unclear at times. The tone may be variable and sometimes inappropriate.",
               "bold": []
             },
             {
@@ -888,11 +792,7 @@ window.IELTS_DATA = {
           ],
           "Coherence and cohesion": [
             {
-              "text": "Organisation is evident but is not wholly logical and there may be a lack of overall progression.",
-              "bold": []
-            },
-            {
-              "text": "Nevertheless, there is a sense of underlying coherence to the response.",
+              "text": "Organisation is evident but is not wholly logical and there may be a lack of overall progression. Nevertheless, there is a sense of underlying coherence to the response.",
               "bold": []
             },
             {
@@ -965,26 +865,12 @@ window.IELTS_DATA = {
               ]
             },
             {
-              "text": "(General Training) The purpose of the letter is not clearly explained and may be confused.",
+              "text": "(General Training) The purpose of the letter is not clearly explained and may be confused. The tone may be inappropriate.",
               "bold": []
             },
             {
-              "text": "The tone may be inappropriate.",
-              "bold": [
-                [
-                  0,
-                  30
-                ]
-              ]
-            },
-            {
               "text": "The format may be inappropriate.",
-              "bold": [
-                [
-                  0,
-                  32
-                ]
-              ]
+              "bold": []
             },
             {
               "text": "Key features/bullet points which are presented may be irrelevant, repetitive, inaccurate or inappropriate.",
@@ -997,11 +883,7 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "Relationships between ideas can be unclear and/or inadequately marked.",
-              "bold": []
-            },
-            {
-              "text": "There is some use of basic cohesive devices, which may be inaccurate or repetitive.",
+              "text": "Relationships between ideas can be unclear and/or inadequately marked. There is some use of basic cohesive devices, which may be inaccurate or repetitive.",
               "bold": []
             },
             {
@@ -1011,17 +893,13 @@ window.IELTS_DATA = {
           ],
           "Lexical resource": [
             {
-              "text": "The resource is limited and inadequate for or unrelated to the task.",
+              "text": "The resource is limited and inadequate for or unrelated to the task. Vocabulary is basic and may be used repetitively.",
               "bold": [
                 [
                   46,
                   68
                 ]
               ]
-            },
-            {
-              "text": "Vocabulary is basic and may be used repetitively.",
-              "bold": []
             },
             {
               "text": "There may be inappropriate use of lexical chunks (e.g. memorised phrases, formulaic language and/or language from the input material).",
@@ -1059,7 +937,7 @@ window.IELTS_DATA = {
         "3": {
           "Task achievement": [
             {
-              "text": "The response does not address the requirements of the task (possibly because of misunderstanding of the data/diagram/situation).",
+              "text": "i Tnhaec cruesraptoen oser idnoaepsp rnoopt raiadtder.ess the requirements of the task (possibly because of misunderstanding of the data/diagram/situation).",
               "bold": []
             },
             {
@@ -1073,19 +951,11 @@ window.IELTS_DATA = {
           ],
           "Coherence and cohesion": [
             {
-              "text": "There is no apparent logical organisation.",
+              "text": "There is no apparent logical organisation. Ideas are discernible but difficult to relate to each other.",
               "bold": []
             },
             {
-              "text": "Ideas are discernible but difficult to relate to each other.",
-              "bold": []
-            },
-            {
-              "text": "Minimal use of sequencers or cohesive devices.",
-              "bold": []
-            },
-            {
-              "text": "Those used do not necessarily indicate a logical relationship between ideas.",
+              "text": "Minimal use of sequencers or cohesive devices. Those used do not necessarily indicate a logical relationship between ideas.",
               "bold": []
             },
             {
@@ -1103,21 +973,13 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "Control of word choice and/or spelling is very limited, and errors predominate.",
-              "bold": []
-            },
-            {
-              "text": "These errors may severely impede meaning.",
+              "text": "Control of word choice and/or spelling is very limited, and errors predominate. These errors may severely impede meaning.",
               "bold": []
             }
           ],
           "Grammatical range and accuracy": [
             {
-              "text": "Sentence forms are attempted, but errors in grammar and punctuation predominate (except in memorised phrases or those taken from the input material).",
-              "bold": []
-            },
-            {
-              "text": "This prevents most meaning from coming through.",
+              "text": "Sentence forms are attempted, but errors in grammar and punctuation predominate (except in memorised phrases or those taken from the input material). This prevents most meaning from coming through.",
               "bold": []
             },
             {
@@ -1140,13 +1002,8 @@ window.IELTS_DATA = {
           ],
           "Coherence and cohesion": [
             {
-              "text": "There is little relevant message, or the entire response may be off-topic.",
-              "bold": [
-                [
-                  37,
-                  74
-                ]
-              ]
+              "text": "TThheerree iiss dlitiftfleic ureltlye vinan idt emnetisfsyaingge,r eofre trheen cing. entire response may be off-topic.",
+              "bold": []
             },
             {
               "text": "There is little evidence of control of organisational features.",
@@ -1174,21 +1031,11 @@ window.IELTS_DATA = {
           "Task achievement": [
             {
               "text": "Responses of 20 words or fewer are rated at Band 1.",
-              "bold": [
-                [
-                  0,
-                  51
-                ]
-              ]
+              "bold": []
             },
             {
               "text": "The content is wholly unrelated to the task.",
-              "bold": [
-                [
-                  0,
-                  44
-                ]
-              ]
+              "bold": []
             },
             {
               "text": "Any copied rubric must be discounted.",
@@ -1212,13 +1059,8 @@ window.IELTS_DATA = {
           ],
           "Lexical resource": [
             {
-              "text": "Responses of 20 words or fewer are rated at Band 1.",
-              "bold": [
-                [
-                  0,
-                  51
-                ]
-              ]
+              "text": "a Rnedsp/oorn sspeesl loinfg 2.0 words or fewer are rated at Band 1.",
+              "bold": []
             },
             {
               "text": "No resource is apparent, except for a few isolated words.",
@@ -1244,44 +1086,44 @@ window.IELTS_DATA = {
         "0": {
           "Task achievement": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "non-writer. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  151,
+                  225
                 ]
               ]
             }
           ],
           "Coherence and cohesion": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "non-writer. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  151,
+                  225
                 ]
               ]
             }
           ],
           "Lexical resource": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "non-writer. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  151,
+                  225
                 ]
               ]
             }
           ],
           "Grammatical range and accuracy": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "non-writer. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  151,
+                  225
                 ]
               ]
             }
@@ -1448,11 +1290,11 @@ window.IELTS_DATA = {
           ],
           "Coherence and cohesion": [
             {
-              "text": "Information and ideas are logically organised, and there is a clear progression throughout the response.",
+              "text": "Information and ideas are logically organised, and there is a clear progression throughout the response. (A few lapses may occur, but these are minor.)",
               "bold": []
             },
             {
-              "text": "(A few lapses may occur, but these are minor.) A range of cohesive devices including reference and substitution is used flexibly but with some inaccuracies or some over/under use.",
+              "text": "A range of cohesive devices including reference and substitution is used flexibly but with some inaccuracies or some over/under use.",
               "bold": []
             },
             {
@@ -1496,11 +1338,7 @@ window.IELTS_DATA = {
         "6": {
           "Task response": [
             {
-              "text": "The main parts of the prompt are addressed (though some may be more fully covered than others).",
-              "bold": []
-            },
-            {
-              "text": "An appropriate format is used.",
+              "text": "The main parts of the prompt are addressed (though some may be more fully covered than others). An appropriate format is used.",
               "bold": []
             },
             {
@@ -1566,17 +1404,13 @@ window.IELTS_DATA = {
         "5": {
           "Task response": [
             {
-              "text": "The main parts of the prompt are incompletely addressed.",
+              "text": "The main parts of the prompt are incompletely addressed. The format may be inappropriate in places.",
               "bold": [
                 [
                   33,
                   56
                 ]
               ]
-            },
-            {
-              "text": "The format may be inappropriate in places.",
-              "bold": []
             },
             {
               "text": "The writer expresses a position, but the development is not always clear.",
@@ -1593,11 +1427,7 @@ window.IELTS_DATA = {
           ],
           "Coherence and cohesion": [
             {
-              "text": "Organisation is evident but is not wholly logical and there may be a lack of overall progression.",
-              "bold": []
-            },
-            {
-              "text": "Nevertheless, there is a sense of underlying coherence to the response.",
+              "text": "Organisation is evident but is not wholly logical and there may be a lack of overall progression. Nevertheless, there is a sense of underlying coherence to the response.",
               "bold": []
             },
             {
@@ -1662,15 +1492,11 @@ window.IELTS_DATA = {
         "4": {
           "Task response": [
             {
-              "text": "The prompt is tackled in a minimal way, or the answer is tangential, possibly due to some misunderstanding of the prompt.",
-              "bold": []
-            },
-            {
-              "text": "The format may be inappropriate.",
+              "text": "The prompt is tackled in a minimal way, or the answer is tangential, possibly due to some misunderstanding of the prompt. The format may be inappropriate.",
               "bold": [
                 [
-                  0,
-                  32
+                  122,
+                  154
                 ]
               ]
             },
@@ -1693,11 +1519,7 @@ window.IELTS_DATA = {
               "bold": []
             },
             {
-              "text": "Relationships between ideas can be unclear and/or inadequately marked.",
-              "bold": []
-            },
-            {
-              "text": "There is some use of basic cohesive devices, which may be inaccurate or repetitive.",
+              "text": "Relationships between ideas can be unclear and/or inadequately marked. There is some use of basic cohesive devices, which may be inaccurate or repetitive.",
               "bold": []
             },
             {
@@ -1711,17 +1533,13 @@ window.IELTS_DATA = {
           ],
           "Lexical resource": [
             {
-              "text": "The resource is limited and inadequate for or unrelated to the task.",
+              "text": "The resource is limited and inadequate for or unrelated to the task. Vocabulary is basic and may be used repetitively.",
               "bold": [
                 [
                   46,
                   67
                 ]
               ]
-            },
-            {
-              "text": "Vocabulary is basic and may be used repetitively.",
-              "bold": []
             },
             {
               "text": "There may be inappropriate use of lexical chunks (e.g. memorised phrases, formulaic language and/or language from the input material).",
@@ -1773,19 +1591,11 @@ window.IELTS_DATA = {
           ],
           "Coherence and cohesion": [
             {
-              "text": "There is no apparent logical organisation.",
+              "text": "w Thitehrien ips anroa garpappahrse.nt logical organisation. Ideas are discernible but difficult to relate to each other.",
               "bold": []
             },
             {
-              "text": "Ideas are discernible but difficult to relate to each other.",
-              "bold": []
-            },
-            {
-              "text": "There is minimal use of sequencers or cohesive devices.",
-              "bold": []
-            },
-            {
-              "text": "Those used do not necessarily indicate a logical relationship between ideas.",
+              "text": "There is minimal use of sequencers or cohesive devices. Those used do not necessarily indicate a logical relationship between ideas.",
               "bold": []
             },
             {
@@ -1799,29 +1609,17 @@ window.IELTS_DATA = {
           ],
           "Lexical resource": [
             {
-              "text": "The resource is inadequate (which may be due to the response being significantly underlength).",
+              "text": "The resource is inadequate (which may be due to the response being significantly underlength). Possible over-dependence on input material or memorised language.",
               "bold": []
             },
             {
-              "text": "Possible over-dependence on input material or memorised language.",
-              "bold": []
-            },
-            {
-              "text": "Control of word choice and/or spelling is very limited, and errors predominate.",
-              "bold": []
-            },
-            {
-              "text": "These errors may severely impede meaning.",
+              "text": "Control of word choice and/or spelling is very limited, and errors predominate. These errors may severely impede meaning.",
               "bold": []
             }
           ],
           "Grammatical range and accuracy": [
             {
-              "text": "Sentence forms are attempted, but errors in grammar and punctuation predominate (except in memorised phrases or those taken from the input material).",
-              "bold": []
-            },
-            {
-              "text": "This prevents most meaning from coming through.",
+              "text": "Sentence forms are attempted, but errors in grammar and punctuation predominate (except in memorised phrases or those taken from the input material). This prevents most meaning from coming through.",
               "bold": []
             },
             {
@@ -1852,13 +1650,8 @@ window.IELTS_DATA = {
           ],
           "Coherence and cohesion": [
             {
-              "text": "There is little relevant message, or the entire response may be off-topic.",
-              "bold": [
-                [
-                  41,
-                  74
-                ]
-              ]
+              "text": "AThneyr aet itse mlittpltes r aetl epvaarnatg mraepshsiangge a, roer uthneh eelnptfuirle. response may be off-topic.",
+              "bold": []
             },
             {
               "text": "There is little evidence of control of organisational features.",
@@ -1885,22 +1678,12 @@ window.IELTS_DATA = {
         "1": {
           "Task response": [
             {
-              "text": "Responses of 20 words or fewer are rated at Band 1.",
-              "bold": [
-                [
-                  0,
-                  51
-                ]
-              ]
+              "text": "d Reevseploonpsmeesn otf. 20 words or fewer are rated at Band 1.",
+              "bold": []
             },
             {
               "text": "The content is wholly unrelated to the prompt.",
-              "bold": [
-                [
-                  0,
-                  46
-                ]
-              ]
+              "bold": []
             },
             {
               "text": "Any copied rubric must be discounted.",
@@ -1924,13 +1707,8 @@ window.IELTS_DATA = {
           ],
           "Lexical resource": [
             {
-              "text": "Responses of 20 words or fewer are rated at Band 1.",
-              "bold": [
-                [
-                  0,
-                  51
-                ]
-              ]
+              "text": "f Roersmpaotniosne sa nodf /2o0r wspoerldlins go.r fewer are rated at Band 1.",
+              "bold": []
             },
             {
               "text": "No resource is apparent, except for a few isolated words.",
@@ -1956,44 +1734,44 @@ window.IELTS_DATA = {
         "0": {
           "Task response": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "Any copied rubric must be discounted. isolated words. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  193,
+                  267
                 ]
               ]
             }
           ],
           "Coherence and cohesion": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "Any copied rubric must be discounted. isolated words. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  193,
+                  267
                 ]
               ]
             }
           ],
           "Lexical resource": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "Any copied rubric must be discounted. isolated words. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  193,
+                  267
                 ]
               ]
             }
           ],
           "Grammatical range and accuracy": [
             {
-              "text": "Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
+              "text": "Any copied rubric must be discounted. isolated words. Should only be used where a candidate did not attend or attempt the question in any way, used a language other than English throughout, or where there is proof that a candidate’s answer has been totally memorised.",
               "bold": [
                 [
-                  139,
-                  213
+                  193,
+                  267
                 ]
               ]
             }
