@@ -594,7 +594,7 @@
     }
 
     .criterion-head-score {
-      min-width: 30px;
+      min-width: 34px;
       height: 28px;
       display: grid;
       place-items: center;
@@ -605,6 +605,8 @@
       color: var(--subtle);
       font-size: 13px;
       font-weight: 850;
+      padding-inline: 7px;
+      white-space: nowrap;
     }
 
     .criterion-head-score.has-score {
@@ -660,6 +662,37 @@
       box-shadow: inset 0 0 0 2px var(--red);
     }
 
+    .descriptor-cell.selected.secondary {
+      background: linear-gradient(180deg, #fff 0%, var(--organize-soft) 100%);
+      box-shadow: inset 0 0 0 2px var(--organize);
+    }
+
+    .cell-selection-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: -7px -8px 12px;
+      padding: 6px 8px;
+      border-radius: 7px;
+      color: var(--red-dark);
+      background: var(--red-soft);
+      font-size: 10px;
+      font-weight: 760;
+      line-height: 1.2;
+    }
+
+    .cell-selection-strip.secondary {
+      color: #1f5fbf;
+      background: var(--organize-soft);
+    }
+
+    .cell-selection-strip span:last-child {
+      color: #5d6675;
+      font-size: 10px;
+      font-weight: 580;
+    }
+
     .descriptor-cell.search-match { background: #fffbe8; }
 
     .descriptor-cell ul {
@@ -677,6 +710,70 @@
       line-height: 1.48;
       -webkit-user-select: text;
       user-select: text;
+    }
+
+    .descriptor-cell.selected li {
+      padding-right: 34px;
+    }
+
+    .descriptor-cell li.fit-selected {
+      margin-left: -8px;
+      padding: 7px 38px 7px 26px;
+      border-radius: 7px;
+      background: var(--positive-soft);
+      box-shadow: inset 3px 0 0 var(--positive);
+    }
+
+    .descriptor-cell li.fit-selected::before {
+      left: 10px;
+    }
+
+    .descriptor-text {
+      display: inline;
+    }
+
+    .fit-toggle {
+      position: absolute;
+      top: -1px;
+      right: 0;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid #c7d0dc;
+      border-radius: 7px;
+      background: #fff;
+      color: transparent;
+      cursor: pointer;
+    }
+
+    .descriptor-cell li.fit-selected .fit-toggle {
+      top: 7px;
+      right: 7px;
+    }
+
+    .fit-toggle:hover,
+    .fit-toggle:focus-visible {
+      border-color: var(--positive);
+      outline: 0;
+      box-shadow: 0 0 0 3px rgba(44, 163, 58, .14);
+    }
+
+    .fit-toggle svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fit-toggle.active {
+      border-color: var(--positive);
+      background: var(--positive);
+      color: #fff;
     }
 
     .descriptor-cell li:last-child { margin-bottom: 0; }
@@ -765,21 +862,40 @@
       font-size: 12px;
     }
 
-    .clear-button {
-      min-height: 40px;
+    .score-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-top: 14px;
+    }
+
+    .clear-button,
+    .export-button {
+      min-height: 40px;
       padding: 0 14px;
-      border: 1px solid var(--red);
       border-radius: 7px;
-      background: #fff;
-      color: var(--red);
       cursor: pointer;
       font-size: 13px;
       font-weight: 700;
     }
 
+    .clear-button {
+      border: 1px solid var(--red);
+      background: #fff;
+      color: var(--red);
+    }
+
+    .export-button {
+      border: 1px solid var(--red);
+      background: var(--red);
+      color: #fff;
+    }
+
     .clear-button:hover { background: var(--red-soft); }
-    .clear-button:disabled { cursor: default; opacity: .45; }
+    .export-button:hover { background: var(--red-dark); }
+    .clear-button:disabled,
+    .export-button:disabled { cursor: default; opacity: .45; }
+    .export-button:disabled:hover { background: var(--red); }
 
     .score-divider {
       height: 1px;
@@ -944,6 +1060,13 @@
       font-variant-numeric: tabular-nums;
     }
 
+    .profile-export {
+      min-height: 34px;
+      margin-top: 10px;
+      padding-inline: 12px;
+      font-size: 12px;
+    }
+
     .profile-section {
       display: grid;
       grid-template-columns: 190px minmax(0, 1fr) 120px;
@@ -1094,7 +1217,7 @@
       .score-card > h2,
       .score-card > .score-value,
       .score-card > .score-caption,
-      .score-card > .clear-button { grid-column: 1; }
+      .score-card > .score-actions { grid-column: 1; }
       .score-card > .score-divider,
       .score-card > .score-section-title,
       .score-card > #scoreRows,
@@ -1238,7 +1361,10 @@
             <h2 id="scoreTitle">Speaking band</h2>
             <div class="score-value" id="scoreValue">—</div>
             <div class="score-caption" id="scoreCaption">Select descriptor cells to build a profile</div>
-            <button class="clear-button" type="button" id="clearScores" disabled>Clear scores</button>
+            <div class="score-actions">
+              <button class="clear-button" type="button" id="clearScores" disabled>Clear scores</button>
+              <button class="export-button" type="button" id="exportPdf" disabled>Export PDF</button>
+            </div>
             <div class="score-divider"></div>
             <div class="score-section-title">Criterion scores</div>
             <div id="scoreRows"></div>
@@ -1249,7 +1375,7 @@
             <span class="info-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 10v6M12 7.5h.01"></path></svg>
             </span>
-            <span>Click any descriptor cell to select a score. In annotation mode, drag across text to highlight a phrase, click a plain line to mark the whole line, and right-click a highlight to remove it.</span>
+            <span>Click descriptor cells to add or remove up to two bands per criterion. In selected cells, tick the descriptor lines that fit. In annotation mode, drag across text to highlight a phrase, click a plain line to mark the whole line, and right-click a highlight to remove it.</span>
           </div>
           <div class="source-note" id="sourceNote"></div>
         </aside>
@@ -1266,6 +1392,7 @@
           <div class="writing-overall">
             <span>Weighted Writing band</span>
             <strong id="writingOverall">—</strong>
+            <button class="export-button profile-export" type="button" id="profileExportPdf" disabled>Export PDF</button>
           </div>
         </header>
         <div id="profileSections"></div>
@@ -1285,6 +1412,7 @@
       const bands = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
       const storageKey = "ielts-rating-scales-state-v1";
       const categoryColors = ["#2ca33a", "#7a3fe0", "#3377e8", "#3377e8"];
+      const maxBandsPerCriterion = 2;
 
       const compareGroups = [
         {
@@ -1339,8 +1467,9 @@
         activeBand: 9,
         scores: Object.fromEntries(sectionNames.map(name => [
           name,
-          Object.fromEntries(data.sections[name].criteria.map(criterion => [criterion, null]))
+          Object.fromEntries(data.sections[name].criteria.map(criterion => [criterion, []]))
         ])),
+        descriptorFits: {},
         annotations: {}
       };
 
@@ -1360,6 +1489,50 @@
       function descriptorForKey(key) {
         const [section, criterion, band, indexText] = key.split("|");
         return data.sections?.[section]?.bands?.[band]?.[criterion]?.[Number(indexText)];
+      }
+
+      function normalizeScoreList(value) {
+        const source = Array.isArray(value)
+          ? value
+          : value == null
+            ? []
+            : [value];
+        const normalized = [];
+        source.forEach(item => {
+          const band = Number(item);
+          if (Number.isInteger(band) && band >= 0 && band <= 9 && !normalized.includes(band)) {
+            normalized.push(band);
+          }
+        });
+        return normalized.slice(0, maxBandsPerCriterion);
+      }
+
+      function selectedBands(sectionName, criterion) {
+        const bandsForCriterion = normalizeScoreList(state.scores?.[sectionName]?.[criterion]);
+        state.scores[sectionName][criterion] = bandsForCriterion;
+        return bandsForCriterion;
+      }
+
+      function criterionScoreValue(sectionName, criterion) {
+        const bandsForCriterion = selectedBands(sectionName, criterion);
+        if (!bandsForCriterion.length) return null;
+        return bandsForCriterion.reduce((sum, band) => sum + band, 0) / bandsForCriterion.length;
+      }
+
+      function scoreDisplayForBands(bandsForCriterion) {
+        if (!bandsForCriterion.length) return "—";
+        const sorted = [...bandsForCriterion].sort((a, b) => a - b);
+        return sorted.length === 1 ? String(sorted[0]) : `${sorted[0]}–${sorted[sorted.length - 1]}`;
+      }
+
+      function selectedCriterionCount(sectionName) {
+        return data.sections[sectionName].criteria
+          .filter(criterion => selectedBands(sectionName, criterion).length > 0)
+          .length;
+      }
+
+      function descriptorExists(key) {
+        return Boolean(descriptorText(descriptorForKey(key) || ""));
       }
 
       function normalizeAnnotations(savedAnnotations) {
@@ -1398,10 +1571,13 @@
             sectionNames.forEach(section => {
               data.sections[section].criteria.forEach(criterion => {
                 const value = saved.scores?.[section]?.[criterion];
-                if (Number.isInteger(value) && value >= 0 && value <= 9) {
-                  state.scores[section][criterion] = value;
-                }
+                state.scores[section][criterion] = normalizeScoreList(value);
               });
+            });
+          }
+          if (saved.descriptorFits && typeof saved.descriptorFits === "object") {
+            Object.entries(saved.descriptorFits).forEach(([key, value]) => {
+              if (value && descriptorExists(key)) state.descriptorFits[key] = true;
             });
           }
           if (saved.annotations && typeof saved.annotations === "object") {
@@ -1418,6 +1594,7 @@
           compare: state.compare,
           fontSize: state.fontSize,
           scores: state.scores,
+          descriptorFits: state.descriptorFits,
           annotations: state.annotations
         }));
       }
@@ -1430,9 +1607,216 @@
         showToast.timer = setTimeout(() => toast.classList.remove("show"), 1800);
       }
 
+      function pdfSafeText(value) {
+        return String(value ?? "")
+          .replace(/[\u2012\u2013\u2014\u2015\u2212]/g, "-")
+          .replace(/[\u2018\u2019]/g, "'")
+          .replace(/[\u201C\u201D]/g, '"')
+          .replace(/\u2022/g, "-")
+          .normalize("NFKD")
+          .replace(/[^\x20-\x7E]/g, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function escapePdfString(value) {
+        return pdfSafeText(value)
+          .replace(/\\/g, "\\\\")
+          .replace(/\(/g, "\\(")
+          .replace(/\)/g, "\\)");
+      }
+
+      function wrapPdfText(value, maxChars) {
+        const words = pdfSafeText(value).split(" ").filter(Boolean);
+        const lines = [];
+        let line = "";
+        words.forEach(word => {
+          if (!line) {
+            line = word;
+          } else if (`${line} ${word}`.length <= maxChars) {
+            line = `${line} ${word}`;
+          } else {
+            lines.push(line);
+            line = word;
+          }
+        });
+        if (line) lines.push(line);
+        return lines.length ? lines : [""];
+      }
+
+      function createPdfBlob(pageStreams, pageWidth, pageHeight) {
+        const objects = [];
+        const addObject = body => {
+          objects.push(body);
+          return objects.length;
+        };
+        const catalogObject = addObject("");
+        const pagesObject = addObject("");
+        const normalFontObject = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+        const boldFontObject = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>");
+        const pageObjects = [];
+
+        pageStreams.forEach(stream => {
+          const contentObject = addObject(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
+          const pageObject = addObject(
+            `<< /Type /Page /Parent ${pagesObject} 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] ` +
+            `/Resources << /Font << /F1 ${normalFontObject} 0 R /F2 ${boldFontObject} 0 R >> >> ` +
+            `/Contents ${contentObject} 0 R >>`
+          );
+          pageObjects.push(pageObject);
+        });
+
+        objects[catalogObject - 1] = `<< /Type /Catalog /Pages ${pagesObject} 0 R >>`;
+        objects[pagesObject - 1] = `<< /Type /Pages /Kids [${pageObjects.map(object => `${object} 0 R`).join(" ")}] /Count ${pageObjects.length} >>`;
+
+        let pdf = "%PDF-1.4\n";
+        const offsets = [0];
+        objects.forEach((body, index) => {
+          offsets[index + 1] = pdf.length;
+          pdf += `${index + 1} 0 obj\n${body}\nendobj\n`;
+        });
+        const xrefOffset = pdf.length;
+        pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+        offsets.slice(1).forEach(offset => {
+          pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+        });
+        pdf += `trailer\n<< /Size ${objects.length + 1} /Root ${catalogObject} 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+        return new Blob([pdf], { type: "application/pdf" });
+      }
+
+      function buildScorePdfBlob(exportSections) {
+        const pageWidth = 595;
+        const pageHeight = 842;
+        const margin = 48;
+        const red = [0.89, 0.09, 0.20];
+        const ink = [0.09, 0.10, 0.13];
+        const muted = [0.39, 0.43, 0.50];
+        const rule = [0.84, 0.87, 0.91];
+        const pageStreams = [];
+        let commands = [];
+        let y = pageHeight - margin;
+
+        const ensureSpace = height => {
+          if (y - height >= margin) return;
+          if (commands.length) pageStreams.push(commands.join("\n"));
+          commands = [];
+          y = pageHeight - margin;
+        };
+
+        const drawText = (x, baseline, text, size = 11, font = "F1", color = ink) => {
+          const [r, g, b] = color;
+          commands.push(`BT ${r} ${g} ${b} rg /${font} ${size} Tf ${x.toFixed(2)} ${baseline.toFixed(2)} Td (${escapePdfString(text)}) Tj ET`);
+        };
+
+        const addText = (text, options = {}) => {
+          const {
+            x = margin,
+            size = 11,
+            font = "F1",
+            color = ink,
+            lineHeight = size + 6
+          } = options;
+          ensureSpace(lineHeight);
+          drawText(x, y, text, size, font, color);
+          y -= lineHeight;
+        };
+
+        const addWrappedText = (text, options = {}) => {
+          const maxChars = options.maxChars || 82;
+          wrapPdfText(text, maxChars).forEach(line => addText(line, options));
+        };
+
+        const addRule = () => {
+          ensureSpace(18);
+          const [r, g, b] = rule;
+          commands.push(`${r} ${g} ${b} RG 0.8 w ${margin.toFixed(2)} ${y.toFixed(2)} m ${(pageWidth - margin).toFixed(2)} ${y.toFixed(2)} l S`);
+          y -= 18;
+        };
+
+        const generatedDate = new Date().toISOString().slice(0, 10);
+        addText("IELTS Student Band Scores", { size: 21, font: "F2", color: red, lineHeight: 30 });
+        addText(`Generated: ${generatedDate}`, { size: 10, color: muted, lineHeight: 16 });
+        addWrappedText("This export includes only IELTS sections with at least one selected band score, and only scored criteria inside those sections.", {
+          size: 10,
+          color: muted,
+          lineHeight: 15,
+          maxChars: 88
+        });
+
+        const writingOverall = writingResult();
+        const hasWritingScores = exportSections.some(section => section.sectionName.startsWith("Writing"));
+        if (hasWritingScores && writingOverall != null) {
+          addText(`Weighted Writing band: ${formatBand(writingOverall)}`, { size: 12, font: "F2", color: red, lineHeight: 22 });
+        } else if (hasWritingScores) {
+          addWrappedText("Weighted Writing band appears after both Writing Task 1 and Writing Task 2 have complete criterion scores.", {
+            size: 9,
+            color: muted,
+            lineHeight: 14,
+            maxChars: 92
+          });
+        }
+
+        exportSections.forEach(section => {
+          addRule();
+          addText(section.sectionName, { size: 15, font: "F2", color: red, lineHeight: 22 });
+          addText(
+            `Reported band: ${formatBand(section.result.reported)} | Average: ${section.result.raw == null ? "-" : section.result.raw.toFixed(2)} | Criteria scored: ${section.criteria.length} of ${data.sections[section.sectionName].criteria.length}`,
+            { size: 10, color: muted, lineHeight: 18 }
+          );
+
+          ensureSpace(24);
+          drawText(margin, y, "Criterion", 9, "F2", muted);
+          drawText(336, y, "Score", 9, "F2", muted);
+          drawText(408, y, "Calculated", 9, "F2", muted);
+          y -= 15;
+
+          section.criteria.forEach(item => {
+            ensureSpace(item.fitCount ? 35 : 22);
+            drawText(margin, y, item.criterion, 10, "F1", ink);
+            drawText(336, y, item.display, 11, "F2", red);
+            drawText(408, y, item.numeric == null ? "-" : item.numeric.toFixed(2), 10, "F1", ink);
+            y -= 16;
+            if (item.fitCount) {
+              drawText(margin + 14, y, `Marked descriptors: ${item.fitCount}`, 9, "F1", muted);
+              y -= 13;
+            }
+          });
+        });
+
+        addRule();
+        addWrappedText("Note: score ranges such as 7-8 are treated as their midpoint for averaging, so 7-8 is calculated as 7.5. This report is provisional and should be checked against the official band descriptors.", {
+          size: 9,
+          color: muted,
+          lineHeight: 13,
+          maxChars: 94
+        });
+
+        if (commands.length) pageStreams.push(commands.join("\n"));
+        return createPdfBlob(pageStreams, pageWidth, pageHeight);
+      }
+
+      function downloadScorePdf() {
+        const exportSections = scoreExportSections();
+        if (!exportSections.length) {
+          showToast("Select at least one band score before exporting");
+          return;
+        }
+        const blob = buildScorePdfBlob(exportSections);
+        const date = new Date().toISOString().slice(0, 10);
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `ielts-band-scores-${date}.pdf`;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast(`Exported ${exportSections.length} scored ${exportSections.length === 1 ? "section" : "sections"}`);
+      }
+
       function selectedValues(sectionName) {
         return data.sections[sectionName].criteria
-          .map(criterion => state.scores[sectionName][criterion])
+          .map(criterion => criterionScoreValue(sectionName, criterion))
           .filter(value => value != null);
       }
 
@@ -1452,6 +1836,51 @@
         const task2 = sectionResult("Writing Task 2");
         if (!task1.complete || !task2.complete) return null;
         return roundHalf((task1.raw + 2 * task2.raw) / 3);
+      }
+
+      function selectedDescriptorFitCount(sectionName, criterion) {
+        const scoredBands = new Set(selectedBands(sectionName, criterion));
+        if (!scoredBands.size) return 0;
+        return Object.keys(state.descriptorFits).filter(key => {
+          const [keySection, keyCriterion, keyBand] = key.split("|");
+          return keySection === sectionName
+            && keyCriterion === criterion
+            && scoredBands.has(Number(keyBand));
+        }).length;
+      }
+
+      function scoreExportSections() {
+        return sectionNames
+          .map(sectionName => {
+            const section = data.sections[sectionName];
+            const criteria = section.criteria
+              .map(criterion => {
+                const bandsForCriterion = selectedBands(sectionName, criterion);
+                if (!bandsForCriterion.length) return null;
+                return {
+                  criterion,
+                  display: scoreDisplayForBands(bandsForCriterion).replace("–", "-"),
+                  numeric: criterionScoreValue(sectionName, criterion),
+                  fitCount: selectedDescriptorFitCount(sectionName, criterion)
+                };
+              })
+              .filter(Boolean);
+            if (!criteria.length) return null;
+            return {
+              sectionName,
+              shortLabel: section.shortLabel,
+              criteria,
+              result: sectionResult(sectionName)
+            };
+          })
+          .filter(Boolean);
+      }
+
+      function syncExportButtons() {
+        const disabled = scoreExportSections().length === 0;
+        $$("#exportPdf, #profileExportPdf").forEach(button => {
+          button.disabled = disabled;
+        });
       }
 
       function categoryForText(text) {
@@ -1614,14 +2043,15 @@
           '<div class="matrix-head corner">Band</div>',
           ...criteria.map(criterion => {
             const criterionIndex = section.criteria.indexOf(criterion);
-            const selectedScore = state.scores[state.section][criterion];
+            const bandsForCriterion = selectedBands(state.section, criterion);
+            const selectedScore = scoreDisplayForBands(bandsForCriterion);
             return `
               <div class="matrix-head criterion-head" style="--category-color:${categoryColors[criterionIndex] || categoryColors[3]}">
                 <span class="criterion-head-main">
                   <span class="criterion-category" aria-hidden="true"></span>
                   <strong>${escapeHtml(criterion)}</strong>
                 </span>
-                <span class="criterion-head-score ${selectedScore != null ? "has-score" : ""}">${selectedScore ?? "—"}</span>
+                <span class="criterion-head-score ${bandsForCriterion.length ? "has-score" : ""}">${escapeHtml(selectedScore)}</span>
               </div>`;
           })
         ].join("");
@@ -1629,25 +2059,43 @@
         const rows = bands.map(band => {
           const cells = criteria.map(criterion => {
             const descriptors = section.bands[String(band)][criterion] || [];
+            const bandsForCriterion = selectedBands(state.section, criterion);
+            const selectedIndex = bandsForCriterion.indexOf(band);
+            const selected = selectedIndex !== -1;
+            const selectedTone = selectedIndex === 1 ? "secondary" : "primary";
             const matchingDescriptors = descriptors.filter(descriptor =>
               descriptorText(descriptor).toLowerCase().includes(query)
             );
             const cellMatches = Boolean(query && matchingDescriptors.length);
             if (cellMatches) matchCount += matchingDescriptors.length;
-            const selected = state.scores[state.section][criterion] === band;
+            const selectionStrip = selected ? `
+              <div class="cell-selection-strip ${selectedTone}">
+                <span>✓ Selected ${selectedIndex + 1} of ${maxBandsPerCriterion}</span>
+                <span>Mark descriptors that fit</span>
+              </div>` : "";
             const bullets = descriptors.map((descriptor, index) => {
               const text = descriptorText(descriptor);
               const key = annotationKey(state.section, criterion, band, index);
-              return `<li data-annotation-key="${escapeHtml(key)}" data-category="${categoryForText(text)}">${renderedDescriptor(descriptor, key)}</li>`;
+              const fit = selected && Boolean(state.descriptorFits[key]);
+              const fitToggle = selected ? `
+                <button class="fit-toggle ${fit ? "active" : ""}" type="button" data-fit-key="${escapeHtml(key)}" aria-pressed="${fit}" aria-label="${fit ? "Unmark" : "Mark"} descriptor as fitting ${escapeHtml(criterion)} Band ${band}">
+                  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8.4 6.5 11.6 12.8 4.5"></path></svg>
+                </button>` : "";
+              return `
+                <li class="${fit ? "fit-selected" : ""}" data-annotation-key="${escapeHtml(key)}" data-category="${categoryForText(text)}">
+                  <span class="descriptor-text">${renderedDescriptor(descriptor, key)}</span>
+                  ${fitToggle}
+                </li>`;
             }).join("");
             return `
-              <div class="descriptor-cell ${selected ? "selected" : ""} ${cellMatches ? "search-match" : ""}"
+              <div class="descriptor-cell ${selected ? `selected ${selectedTone}` : ""} ${cellMatches ? "search-match" : ""}"
                    data-criterion="${escapeHtml(criterion)}"
                    data-band="${band}"
                    role="button"
                    tabindex="0"
                    aria-pressed="${selected}"
-                   aria-label="Set ${escapeHtml(criterion)} to Band ${band}">
+                   aria-label="${selected ? "Remove" : "Add"} ${escapeHtml(criterion)} Band ${band}">
+                ${selectionStrip}
                 <ul>${bullets}</ul>
               </div>`;
           }).join("");
@@ -1669,29 +2117,31 @@
       function renderScoreSidebar() {
         const section = data.sections[state.section];
         const result = sectionResult(state.section);
-        const values = selectedValues(state.section);
+        const chosen = selectedCriterionCount(state.section);
         $("#scoreTitle").textContent = `${section.shortLabel} band`;
         $("#scoreValue").textContent = formatBand(result.reported);
         $("#scoreCaption").textContent = result.complete
           ? "Provisional reported band"
-          : values.length
-            ? `${values.length} of ${section.criteria.length} criteria selected`
+          : chosen
+            ? `${chosen} of ${section.criteria.length} criteria selected`
             : "Select descriptor cells to build a profile";
         $("#rawAverage").textContent = result.raw == null ? "—" : result.raw.toFixed(2);
-        $("#clearScores").disabled = values.length === 0;
+        $("#clearScores").disabled = chosen === 0;
+        syncExportButtons();
 
         $("#scoreRows").innerHTML = section.criteria.map((criterion, index) => {
-          const value = state.scores[state.section][criterion];
+          const bandsForCriterion = selectedBands(state.section, criterion);
+          const value = scoreDisplayForBands(bandsForCriterion);
           return `
             <div class="score-row" style="--category-color:${categoryColors[index] || categoryColors[3]}">
               <span class="score-row-dot" aria-hidden="true"></span>
               <span class="score-row-label">${escapeHtml(criterion)}</span>
-              <span class="score-row-value ${value != null ? "has-score" : ""}">${value ?? "—"}</span>
+              <span class="score-row-value ${bandsForCriterion.length ? "has-score" : ""}">${escapeHtml(value)}</span>
             </div>`;
         }).join("");
 
         $("#helpNote").querySelector("span:last-child").textContent =
-          `${section.note} Click a descriptor cell to select its band. In annotation mode, drag across a phrase to highlight it; right-click a highlight to remove it.`;
+          `${section.note} Click descriptor cells to add or remove up to two bands per criterion. In selected cells, tick the descriptor lines that fit. In annotation mode, drag across a phrase to highlight it; right-click a highlight to remove it.`;
       }
 
       function renderProfile() {
@@ -1699,14 +2149,16 @@
         $("#profileSections").innerHTML = sectionNames.map(sectionName => {
           const section = data.sections[sectionName];
           const result = sectionResult(sectionName);
-          const chosen = selectedValues(sectionName).length;
+          const chosen = selectedCriterionCount(sectionName);
           const criteriaRows = section.criteria.map(criterion => {
-            const value = state.scores[sectionName][criterion];
+            const bandsForCriterion = selectedBands(sectionName, criterion);
+            const displayValue = scoreDisplayForBands(bandsForCriterion);
+            const numericValue = criterionScoreValue(sectionName, criterion);
             return `
               <div class="profile-criterion-row">
                 <span class="profile-criterion-name">${escapeHtml(criterion)}</span>
-                <span class="profile-criterion-score">${value ?? "—"}</span>
-                <span class="profile-track" aria-hidden="true"><span style="width:${value == null ? 0 : (value / 9) * 100}%"></span></span>
+                <span class="profile-criterion-score">${escapeHtml(displayValue)}</span>
+                <span class="profile-track" aria-hidden="true"><span style="width:${numericValue == null ? 0 : (numericValue / 9) * 100}%"></span></span>
               </div>`;
           }).join("");
           return `
@@ -1719,6 +2171,7 @@
               <div class="profile-result" aria-label="${escapeHtml(sectionName)} reported band">${formatBand(result.reported)}</div>
             </section>`;
         }).join("");
+        syncExportButtons();
       }
 
       function renderAll(options) {
@@ -1728,11 +2181,41 @@
         saveState();
       }
 
+      function clearDescriptorFitsForCell(sectionName, criterion, band) {
+        Object.keys(state.descriptorFits).forEach(key => {
+          const [keySection, keyCriterion, keyBand] = key.split("|");
+          if (keySection === sectionName && keyCriterion === criterion && Number(keyBand) === Number(band)) {
+            delete state.descriptorFits[key];
+          }
+        });
+      }
+
+      function clearDescriptorFitsForSection(sectionName) {
+        Object.keys(state.descriptorFits).forEach(key => {
+          if (key.split("|")[0] === sectionName) delete state.descriptorFits[key];
+        });
+      }
+
       function selectScore(cell) {
         const criterion = cell.dataset.criterion;
         const band = Number(cell.dataset.band);
-        state.scores[state.section][criterion] =
-          state.scores[state.section][criterion] === band ? null : band;
+        const bandsForCriterion = selectedBands(state.section, criterion);
+        if (bandsForCriterion.includes(band)) {
+          state.scores[state.section][criterion] = bandsForCriterion.filter(value => value !== band);
+          clearDescriptorFitsForCell(state.section, criterion, band);
+        } else if (bandsForCriterion.length < maxBandsPerCriterion) {
+          state.scores[state.section][criterion] = [...bandsForCriterion, band];
+        } else {
+          showToast(`Each criterion can have up to ${maxBandsPerCriterion} bands. Clear one first.`);
+          return;
+        }
+        renderAll();
+      }
+
+      function toggleDescriptorFit(key) {
+        if (!descriptorExists(key)) return;
+        if (state.descriptorFits[key]) delete state.descriptorFits[key];
+        else state.descriptorFits[key] = true;
         renderAll();
       }
 
@@ -1779,8 +2262,9 @@
       }
 
       function selectionOffsets(line, range) {
+        const textContainer = line.querySelector(".descriptor-text") || line;
         const before = document.createRange();
-        before.selectNodeContents(line);
+        before.selectNodeContents(textContainer);
         before.setEnd(range.startContainer, range.startOffset);
         const start = before.toString().length;
         return { start, end: start + range.toString().length };
@@ -1797,8 +2281,10 @@
         let endNode = range.endContainer.nodeType === Node.TEXT_NODE
           ? range.endContainer.parentElement
           : range.endContainer;
-        const line = startNode?.closest?.("li[data-annotation-key]");
-        if (!line || line !== endNode?.closest?.("li[data-annotation-key]")) return;
+        const startText = startNode?.closest?.(".descriptor-text");
+        const endText = endNode?.closest?.(".descriptor-text");
+        const line = startText?.closest?.("li[data-annotation-key]");
+        if (!line || startText !== endText || line !== endText?.closest?.("li[data-annotation-key]")) return;
         const { start, end } = selectionOffsets(line, range);
         if (!addAnnotationRange(line.dataset.annotationKey, start, end)) return;
         selection.removeAllRanges();
@@ -1876,6 +2362,13 @@
 
       $("#matrix").addEventListener("click", event => {
         const line = event.target.closest("li[data-annotation-key]");
+        const fitButton = event.target.closest("[data-fit-key]");
+        if (fitButton) {
+          event.preventDefault();
+          event.stopPropagation();
+          toggleDescriptorFit(fitButton.dataset.fitKey);
+          return;
+        }
         if (state.annotate) {
           event.stopPropagation();
           if (annotationDragged) return;
@@ -1894,10 +2387,17 @@
           return;
         }
         const cell = event.target.closest(".descriptor-cell");
+        if (line && cell?.classList.contains("selected")) {
+          const selection = window.getSelection();
+          if (selection?.toString().trim()) return;
+          toggleDescriptorFit(line.dataset.annotationKey);
+          return;
+        }
         if (cell) selectScore(cell);
       });
 
       $("#matrix").addEventListener("keydown", event => {
+        if (event.target.closest(".fit-toggle")) return;
         if (state.annotate || !["Enter", " "].includes(event.key)) return;
         const cell = event.target.closest(".descriptor-cell");
         if (!cell) return;
@@ -1906,7 +2406,7 @@
       });
 
       $("#matrix").addEventListener("mousedown", event => {
-        if (!state.annotate || !event.target.closest("li[data-annotation-key]")) return;
+        if (!state.annotate || !event.target.closest(".descriptor-text")) return;
         annotationPointerStart = { x: event.clientX, y: event.clientY };
         annotationDragged = false;
       });
@@ -1941,11 +2441,15 @@
 
       $("#clearScores").addEventListener("click", () => {
         data.sections[state.section].criteria.forEach(criterion => {
-          state.scores[state.section][criterion] = null;
+          state.scores[state.section][criterion] = [];
         });
+        clearDescriptorFitsForSection(state.section);
         renderAll();
         showToast(`${data.sections[state.section].shortLabel} scores cleared`);
       });
+
+      $("#exportPdf").addEventListener("click", downloadScorePdf);
+      $("#profileExportPdf").addEventListener("click", downloadScorePdf);
 
       $(".primary-tabs").addEventListener("click", event => {
         const button = event.target.closest("[data-view]");
