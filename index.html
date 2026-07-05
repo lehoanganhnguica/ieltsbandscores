@@ -1771,14 +1771,25 @@
           y -= 15;
 
           section.criteria.forEach(item => {
-            ensureSpace(item.fitCount ? 35 : 22);
+            const selectedDescriptors = item.descriptors || [];
+            ensureSpace(selectedDescriptors.length ? 48 : 22);
             drawText(margin, y, item.criterion, 10, "F1", ink);
             drawText(336, y, item.display, 11, "F2", red);
             drawText(408, y, item.numeric == null ? "-" : item.numeric.toFixed(2), 10, "F1", ink);
             y -= 16;
-            if (item.fitCount) {
-              drawText(margin + 14, y, `Marked descriptors: ${item.fitCount}`, 9, "F1", muted);
+            if (selectedDescriptors.length) {
+              drawText(margin + 14, y, `Selected descriptors: ${selectedDescriptors.length}`, 9, "F2", muted);
               y -= 13;
+              selectedDescriptors.forEach(descriptor => {
+                addWrappedText(`- Band ${descriptor.band}: ${descriptor.text}`, {
+                  x: margin + 24,
+                  size: 8.5,
+                  color: muted,
+                  lineHeight: 12,
+                  maxChars: 94
+                });
+              });
+              y -= 2;
             }
           });
         });
@@ -1838,15 +1849,23 @@
         return roundHalf((task1.raw + 2 * task2.raw) / 3);
       }
 
-      function selectedDescriptorFitCount(sectionName, criterion) {
-        const scoredBands = new Set(selectedBands(sectionName, criterion));
-        if (!scoredBands.size) return 0;
-        return Object.keys(state.descriptorFits).filter(key => {
-          const [keySection, keyCriterion, keyBand] = key.split("|");
-          return keySection === sectionName
-            && keyCriterion === criterion
-            && scoredBands.has(Number(keyBand));
-        }).length;
+      function selectedDescriptorFits(sectionName, criterion) {
+        return selectedBands(sectionName, criterion)
+          .slice()
+          .sort((a, b) => b - a)
+          .flatMap(band => {
+            const descriptors = data.sections?.[sectionName]?.bands?.[String(band)]?.[criterion] || [];
+            return descriptors
+              .map((descriptor, index) => {
+                const key = annotationKey(sectionName, criterion, band, index);
+                if (!state.descriptorFits[key]) return null;
+                return {
+                  band,
+                  text: descriptorText(descriptor)
+                };
+              })
+              .filter(Boolean);
+          });
       }
 
       function scoreExportSections() {
@@ -1861,7 +1880,7 @@
                   criterion,
                   display: scoreDisplayForBands(bandsForCriterion).replace("–", "-"),
                   numeric: criterionScoreValue(sectionName, criterion),
-                  fitCount: selectedDescriptorFitCount(sectionName, criterion)
+                  descriptors: selectedDescriptorFits(sectionName, criterion)
                 };
               })
               .filter(Boolean);
